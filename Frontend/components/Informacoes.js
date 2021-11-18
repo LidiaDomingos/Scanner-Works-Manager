@@ -2,7 +2,7 @@ import React , { useState} from 'react';
 
 import { View , ScrollView } from 'react-native';
 
-import { TextInput , List , Divider} from 'react-native-paper';
+import { TextInput , List , Divider , Paragraph } from 'react-native-paper';
 
 import { DropDown, DateTimePicker} from '../lib';
 
@@ -26,9 +26,9 @@ export default function Informacoes(props) {
     return (
         <ScrollView style={styles.container}>
 
-            <List.Section style={styles.geral}>
+            <List.Section>
 
-                 <List.Subheader>Geral</List.Subheader>
+                <List.Subheader style = {styles.title}>Geral</List.Subheader>
 
                 <TextInput style={styles.input} label="ID"/>
                 <TextInput style={styles.input} label="Local"/>
@@ -43,9 +43,9 @@ export default function Informacoes(props) {
 
             <Divider />
 
-            <List.Section style={styles.ultimoRegistro}>
+            <List.Section>
 
-                 <List.Subheader>Último registro</List.Subheader>
+                <List.Subheader>Último registro</List.Subheader>
  
                 <View style={styles.tempo}>
                     <DateTimePicker type="date" style={styles.inputDate} label="Data" value={lastDate} setValue={setLastDate} />
@@ -56,7 +56,7 @@ export default function Informacoes(props) {
 
             <Divider />
 
-            <List.Section style={styles.informacoesItem}>
+            <List.Section>
 
                  <List.Subheader>Informacoes sobre o item</List.Subheader>
  

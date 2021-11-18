@@ -1,5 +1,10 @@
 container {
     flex-grow: 1;
+    margin:10px
+}
+
+title {
+    padding: 5px;
 }
 
 tempo {
@@ -7,16 +12,21 @@ tempo {
     flex-grow: 1;
 }
 
+input{
+    margin-top: 8px;
+}
+
 inputDate {
     flex-direction: row;
     flex-grow: 1;
-}
-
-geral {
-    flex-grow:1;
+    margin-right: 5px;
+    margin-top: 8px;
+    margin-bottom: 3px;
 }
 
 inputTime {
     flex-direction: row;
     flex-grow: 1;
+    margin-top: 8px;
+    margin-bottom: 3px;
 }
