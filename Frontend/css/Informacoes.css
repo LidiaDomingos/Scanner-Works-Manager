@@ -2,7 +2,7 @@ container {
     flex-grow: 1;
 }
 
-now {
+tempo {
     flex-direction: row;
     flex-grow: 1;
 }
@@ -10,6 +10,10 @@ now {
 inputDate {
     flex-direction: row;
     flex-grow: 1;
+}
+
+geral {
+    flex-grow:1;
 }
 
 inputTime {
