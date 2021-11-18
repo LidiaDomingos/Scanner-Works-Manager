@@ -16,6 +16,13 @@ export default function Informacoes(props) {
     const [lastDate, setLastDate] = useState(new Date());
     const [lastTime, setLastTime] = useState(new Date());
 
+    const movimentacaoOpcoes = [
+        { label: 'Não', value: 'NAO' },
+        { label: 'Sim', value: 'SIM' },
+    ];
+
+    const [movimentacao, setMovimentacao] = useState('NAO');
+
     return (
         <ScrollView style={styles.container}>
 
@@ -48,6 +55,18 @@ export default function Informacoes(props) {
             </List.Section>
 
             <Divider />
+
+            <List.Section style={styles.informacoesItem}>
+
+                 <List.Subheader>Informacoes sobre o item</List.Subheader>
+ 
+                 <TextInput style={styles.input} label="Quantidade em Estoque"/>
+                 <DropDown style={styles.input} label="Movimentação" list={movimentacaoOpcoes} value={movimentacao} setValue={setMovimentacao} />
+
+                {/*Ajustar para caso seja marcado a opção SIM : Habilitar destino*/}
+                 <TextInput style={styles.input} label="Destino" disabled={true}/>
+
+            </List.Section>
 
 
         </ScrollView>
