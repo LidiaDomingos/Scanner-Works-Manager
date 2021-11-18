@@ -23,6 +23,14 @@ export default function Informacoes(props) {
 
     const [movimentacao, setMovimentacao] = useState('NAO');
 
+    const statusOpcoes = [
+        { label: 'Em uso', value: 'USO' },
+        { label: 'Em manutencao', value: 'MANUTENCAO' },
+        { label: 'Danificado', value: 'DANIFICADO' },
+    ];
+
+    const [status, setStatus] = useState('USO');
+
     return (
         <ScrollView style={styles.container}>
 
@@ -61,6 +69,7 @@ export default function Informacoes(props) {
                  <List.Subheader>Informacoes sobre o item</List.Subheader>
  
                  <TextInput style={styles.input} label="Quantidade em Estoque"/>
+                 <DropDown style={styles.input} label="Status" list={statusOpcoes} value={status} setValue={setStatus} />
                  <DropDown style={styles.input} label="Movimentação" list={movimentacaoOpcoes} value={movimentacao} setValue={setMovimentacao} />
 
                 {/*Ajustar para caso seja marcado a opção SIM : Habilitar destino*/}
