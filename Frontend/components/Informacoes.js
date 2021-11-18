@@ -2,7 +2,7 @@ import React , { useState} from 'react';
 
 import { View , ScrollView } from 'react-native';
 
-import { TextInput , List , Divider , Paragraph } from 'react-native-paper';
+import { TextInput , List , Divider , Button } from 'react-native-paper';
 
 import { DropDown, DateTimePicker} from '../lib';
 
@@ -77,6 +77,10 @@ export default function Informacoes(props) {
 
             </List.Section>
 
+            <View style = {styles.buttons}>
+                <Button mode="outlined" > Fechar </Button>
+                <Button mode="contained" > Salvar </Button>
+            </View>
 
         </ScrollView>
     );

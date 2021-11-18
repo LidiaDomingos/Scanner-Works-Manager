@@ -30,3 +30,13 @@ inputTime {
     margin-top: 8px;
     margin-bottom: 3px;
 }
+
+buttons {
+    flex-direction: row;
+    flex-grow: 1;
+
+    margin-top: 5px;
+    margin-bottom: 5px;
+
+    justify-content: space-evenly;
+}
