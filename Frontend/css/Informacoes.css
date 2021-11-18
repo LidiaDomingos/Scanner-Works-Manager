@@ -1,0 +1,18 @@
+container {
+    flex-grow: 1;
+}
+
+now {
+    flex-direction: row;
+    flex-grow: 1;
+}
+
+inputDate {
+    flex-direction: row;
+    flex-grow: 1;
+}
+
+inputTime {
+    flex-direction: row;
+    flex-grow: 1;
+}
