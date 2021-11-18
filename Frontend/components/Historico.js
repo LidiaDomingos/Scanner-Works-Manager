@@ -44,28 +44,28 @@ export default function Historico(props) {
                 </DataTable.Row>
 
                 <DataTable.Row>
-                    <DataTable.Cell>Cano</DataTable.Cell>
+                    <DataTable.Cell >Cano</DataTable.Cell>
                     <DataTable.Cell numeric>07/10/2021</DataTable.Cell>
                     <DataTable.Cell numeric>19:15</DataTable.Cell>
                     <DataTable.Cell numeric>user3</DataTable.Cell>
                 </DataTable.Row>
 
                 <DataTable.Row>
-                    <DataTable.Cell>Madeira</DataTable.Cell>
+                    <DataTable.Cell >Madeira</DataTable.Cell>
                     <DataTable.Cell numeric>04/09/2021</DataTable.Cell>
                     <DataTable.Cell numeric>15:50</DataTable.Cell>
                     <DataTable.Cell numeric>user4</DataTable.Cell>
                 </DataTable.Row>
 
                 <DataTable.Row>
-                    <DataTable.Cell>Ferro</DataTable.Cell>
+                    <DataTable.Cell >Ferro</DataTable.Cell>
                     <DataTable.Cell numeric>25/11/2020</DataTable.Cell>
                     <DataTable.Cell numeric>7:30</DataTable.Cell>
                     <DataTable.Cell numeric>user5</DataTable.Cell>
                 </DataTable.Row>
 
                 <DataTable.Row>
-                    <DataTable.Cell>Cimento</DataTable.Cell>
+                    <DataTable.Cell >Cimento</DataTable.Cell>
                     <DataTable.Cell numeric>13/11/2021</DataTable.Cell>
                     <DataTable.Cell numeric>12:30</DataTable.Cell>
                     <DataTable.Cell numeric>user6</DataTable.Cell>
