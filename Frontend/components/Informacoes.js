@@ -79,7 +79,7 @@ export default function Informacoes(props) {
 
             <View style = {styles.buttons}>
                 <Button mode="outlined" > Fechar </Button>
-                <Button mode="contained" > Salvar </Button>
+                <Button mode="contained" > Salvar Alteração </Button>
             </View>
 
         </ScrollView>
