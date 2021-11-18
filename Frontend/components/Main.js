@@ -17,10 +17,10 @@ const Drawer = createDrawerNavigator();
 
 export default function Main(props) {
     return (
-        <Drawer.Navigator initialRouteName="Informacoes">
+        <Drawer.Navigator initialRouteName="Historico">
             <Drawer.Screen name="Informações" component= {Informacoes} />
-            <Drawer.Screen name="Consulta" component= {Historico} />
-            <Drawer.Screen name="Histórico" component= {Consulta} />
+            <Drawer.Screen name="Consulta" component= {Consulta} />
+            <Drawer.Screen name="Histórico" component= {Historico} />
         </Drawer.Navigator>
     );
 }
