@@ -4,12 +4,22 @@ import { View , ScrollView } from 'react-native';
 
 import { TextInput , List , Divider , Button } from 'react-native-paper';
 
-import { DropDown, DateTimePicker} from '../lib';
+import { DropDown, DateTimePicker, useRequest} from '../lib';
+import settings from "../settings.json";
 
 import styles from '../styles/Informacoes.json';
 
 export default function Informacoes(props) {
+    const { post, put, response: registerResponse } = useRequest(settings.url);
 
+    const { del, response: removeResponse } = useRequest(settings.url);
+    const [registerError, setRegisterError] = useState(false);
+
+    const { navigation, route } = props;
+
+    const item = route.params
+    const [id, setId] = useState(item ? item.id : "");
+    const [local, setLocal] = useState(item ? item.local:"");
     const [date, setDate] = useState(new Date());
     const [nowTime, setNowTime] = useState(new Date());
 
@@ -17,11 +27,11 @@ export default function Informacoes(props) {
     const [lastTime, setLastTime] = useState(new Date());
 
     const movimentacaoOpcoes = [
-        { label: 'Não', value: 'NAO' },
-        { label: 'Sim', value: 'SIM' },
+        { label: 'Não', value: false },
+        { label: 'Sim', value: true },
     ];
 
-    const [movimentacao, setMovimentacao] = useState('NAO');
+    const [movimentacao, setMovimentacao] = useState( item ? item.movimentacao: false);
 
     const statusOpcoes = [
         { label: 'Em uso', value: 'USO' },
@@ -29,7 +39,26 @@ export default function Informacoes(props) {
         { label: 'Danificado', value: 'DANIFICADO' },
     ];
 
-    const [status, setStatus] = useState('USO');
+    const [status, setStatus] = useState(item ? item.status: 'USO');
+
+    function onPressRegister() {
+        const body = {
+            id: id,
+            local : local,
+            status : status,
+            movimentacao : movimentacao
+        };
+        if (item) {
+            body.id = item.key;
+            put('/item', body);
+        } else {
+            post('/item', body);
+        }
+    }
+
+    function onChangeLocal(text) {
+        setLocal(text);
+    }
 
     return (
         <ScrollView style={styles.container}>
@@ -38,8 +67,8 @@ export default function Informacoes(props) {
 
                 <List.Subheader style = {styles.title}>Geral</List.Subheader>
 
-                <TextInput style={styles.input} label="ID"/>
-                <TextInput style={styles.input} label="Local"/>
+                <TextInput style={styles.input} label="ID" value={id} onChange={setId}/>
+                <TextInput style={styles.input} label="Local"  value={local} onChange={onChangeLocal}/>
                 <TextInput style={styles.input} label="Usuario"/>
 
                 <View style={styles.tempo}>
@@ -79,7 +108,7 @@ export default function Informacoes(props) {
 
             <View style = {styles.buttons}>
                 <Button mode="outlined" > Fechar </Button>
-                <Button mode="contained" > Salvar Alteração </Button>
+                <Button mode="contained"  onPress={onPressRegister}> Salvar Alteração</Button>
             </View>
 
         </ScrollView>
