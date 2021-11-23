@@ -5,6 +5,7 @@ container {
 
 title {
     padding: 5px;
+    margin-top: 3px;
 }
 
 tempo {
@@ -35,7 +36,7 @@ buttons {
     flex-direction: row;
     flex-grow: 1;
 
-    margin-top: 5px;
+    margin-top: 10px;
     margin-bottom: 5px;
 
     justify-content: space-evenly;

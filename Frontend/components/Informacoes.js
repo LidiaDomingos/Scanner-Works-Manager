@@ -2,7 +2,7 @@ import React , { useState} from 'react';
 
 import { View , ScrollView } from 'react-native';
 
-import { TextInput , List , Divider , Button } from 'react-native-paper';
+import { TextInput , Caption , Divider , Button } from 'react-native-paper';
 
 import { DropDown, DateTimePicker} from '../lib';
 
@@ -29,14 +29,20 @@ export default function Informacoes(props) {
         { label: 'Danificado', value: 'DANIFICADO' },
     ];
 
+    const tipoOpcoes = [
+        {label: 'Material', value : 'MATERIAL'},
+        {label: 'Ferramenta' , value: 'FERRAMENTA'}
+    ]
+
     const [status, setStatus] = useState('USO');
+    const [tipo, setTipo] = useState('MATERIAL');
 
     return (
         <ScrollView style={styles.container}>
 
-            <List.Section>
+            <View>
 
-                <List.Subheader style = {styles.title}>Geral</List.Subheader>
+                <Caption style = {styles.title}>Geral</Caption>
 
                 <TextInput style={styles.input} label="ID"/>
                 <TextInput style={styles.input} label="Local"/>
@@ -47,27 +53,25 @@ export default function Informacoes(props) {
                     <DateTimePicker type="time" style={styles.inputTime} label="Hora" value={nowTime} setValue={setNowTime} />
                 </View>
 
-            </List.Section>
+            </View>
 
-            <Divider />
+            <View>
 
-            <List.Section>
-
-                <List.Subheader>Último registro</List.Subheader>
+                <Caption style = {styles.title} >Útlimo Registro</Caption>
  
                 <View style={styles.tempo}>
                     <DateTimePicker type="date" style={styles.inputDate} label="Data" value={lastDate} setValue={setLastDate} />
                     <DateTimePicker type="time" style={styles.inputTime} label="Hora" value={lastTime} setValue={setLastTime} />
                 </View>
 
-            </List.Section>
+            </View>
 
-            <Divider />
+            <View>
 
-            <List.Section>
-
-                 <List.Subheader>Informacoes sobre o item</List.Subheader>
- 
+                 <Caption style = {styles.title} >Informacoes sobre o item</Caption>
+                 
+                 <TextInput style={styles.input} label="Nome"/>
+                 <DropDown style={styles.input} label="Tipo" list={tipoOpcoes} value={tipo} setValue={setTipo} />
                  <TextInput style={styles.input} label="Quantidade em Estoque"/>
                  <DropDown style={styles.input} label="Status" list={statusOpcoes} value={status} setValue={setStatus} />
                  <DropDown style={styles.input} label="Movimentação" list={movimentacaoOpcoes} value={movimentacao} setValue={setMovimentacao} />
@@ -75,7 +79,9 @@ export default function Informacoes(props) {
                 {/*Ajustar para caso seja marcado a opção SIM : Habilitar destino*/}
                  <TextInput style={styles.input} label="Destino" disabled={true}/>
 
-            </List.Section>
+            </View>
+
+            <TextInput style={styles.input} label="Observações"/>
 
             <View style = {styles.buttons}>
                 <Button mode="outlined" > Fechar </Button>
