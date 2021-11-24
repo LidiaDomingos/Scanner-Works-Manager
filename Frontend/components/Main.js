@@ -1,6 +1,6 @@
  import React from 'react';
 
-import { View , Image , Text ,TouchableOpacity, StyleSheet} from 'react-native';
+import { View , Image , Text ,TouchableOpacity, Button} from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 
 import styles from '../styles/Main.json';
@@ -56,7 +56,20 @@ export default function Main(props) {
         <Drawer.Navigator initialRouteName="Historico"  
           drawerContent={props => <CustomDrawer {...props} />}>
 
-            <Drawer.Screen name="Informações" component= {Informacoes} />
+            <Drawer.Screen name="Informações" component= {Informacoes} 
+              options={{
+                headerRight: () => (
+                  <View>
+                    <Button
+                      icon="bell-ring-outline"
+                      onPress={() => alert('This is a button!')}
+                      title="Info"
+                    />
+                    <Image source={require('../assets/logo.png')}/>
+                  </View>
+                ),
+              }}
+            />
             <Drawer.Screen name="Consulta" component= {Consulta} />
             <Drawer.Screen name="Histórico" component= {Historico} />
 
