@@ -1,4 +1,4 @@
- import React from 'react';
+import React from 'react';
 
 import { View } from 'react-native';
 
@@ -8,19 +8,11 @@ import { StatusBar } from 'expo-status-bar';
 
 import styles from '../styles/Main.json';
 
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import Consulta from './Consulta'
-import Historico from './Historico'
-import Informacoes from './Informacoes'
-
-const Drawer = createDrawerNavigator();
-
 export default function Main(props) {
     return (
-        <Drawer.Navigator initialRouteName="Historico">
-            <Drawer.Screen name="Informações" component= {Informacoes} />
-            <Drawer.Screen name="Consulta" component= {Consulta} />
-            <Drawer.Screen name="Histórico" component= {Historico} />
-        </Drawer.Navigator>
+        <View style={styles.container}>
+            <Text>Abra Main.js para começar a trabalhar no seu app!</Text>
+            <StatusBar style="auto" />
+        </View>
     );
 }
