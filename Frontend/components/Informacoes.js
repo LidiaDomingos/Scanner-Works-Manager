@@ -2,26 +2,36 @@ import React , { useState } from 'react';
 
 import { View , ScrollView } from 'react-native';
 
-import { TextInput , Caption , Divider , Button } from 'react-native-paper';
+import { TextInput , Caption , Divider , Button , Snackbar} from 'react-native-paper';
 
-import { DropDown, DateTimePicker, useRequest} from '../lib';
+import { DropDown, DateTimePicker, useRequest , useGlobal} from '../lib';
 
 import styles from '../styles/Informacoes.json';
+import settings from '../settings.json';
 
 export default function Informacoes(props) {
 
     const [dateScan, setDate] = useState(new Date());
     const [timeScan, setNowTime] = useState(new Date());
-
     const [lastDate, setLastDate] = useState(new Date());
     const [lastTime, setLastTime] = useState(new Date());
+    const [movimentacao, setMovimentacao] = useState('NAO');
+    const [status, setStatus] = useState('USO');
+    const [tipo, setTipo] = useState('MATERIAL');
+    // const [id, setId] = useState('');
+    const [id, setId] = useGlobal('id');
+    const [local, setLocal] = useState('');
+    const [usuario, setUsuario] = useState('');
+    const [nome, setNome] = useState('');
+    const [quantidade, setQuantidade] = useState('');
+    const [observacoes, setObservacoes] = useState('');
+
+    const [getError, setGetError] = useState(false);
 
     const movimentacaoOpcoes = [
         { label: 'Não', value: 'NAO' },
         { label: 'Sim', value: 'SIM' },
     ];
-
-    const [movimentacao, setMovimentacao] = useState('NAO');
 
     const statusOpcoes = [
         { label: 'Em uso', value: 'USO' },
@@ -34,19 +44,11 @@ export default function Informacoes(props) {
         {label: 'Ferramenta' , value: 'FERRAMENTA'}
     ]
 
-    const [status, setStatus] = useState('USO');
-    const [tipo, setTipo] = useState('MATERIAL');
-    const [id, setId] = useState('');
-    const [local, setLocal] = useState('');
-    const [usuario, setUsuario] = useState('');
-    const [nome, setNome] = useState('');
-    const [quantidade, setQuantidade] = useState('');
-    const [observacoes, setObservacoes] = useState('');
-
-    const {post, response} = useRequest('http://172.30.80.1:8080');
+    const { navigation, route } = props;
+    const {post, response} = useRequest(settings.url);
 
     function atualiza() {
-        post('/historico',{
+        post('/produtos',{
                 id:id,
                 local:local,
                 usuario:usuario,
@@ -108,8 +110,8 @@ export default function Informacoes(props) {
             <TextInput style={styles.input} label="Observações" value={observacoes} onChangeText={setObservacoes}/>
 
             <View style = {styles.buttons}>
-                <Button mode="outlined" > Fechar </Button>
-                <Button mode="contained" onPress={atualiza}> Salvar Alteração </Button>
+                <Button mode="contained" onPress={atualiza}> Salvar </Button>
+                <Button mode="outlined" onPress={() => navigation.navigate('Histórico', route)}> Historico </Button>
             </View>
 
         </ScrollView>
