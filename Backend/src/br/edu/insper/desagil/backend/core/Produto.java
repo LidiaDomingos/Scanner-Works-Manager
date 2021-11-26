@@ -13,15 +13,28 @@ public class Produto extends FirestoreObject {
 	private String lastDate;
 	private String lastTime;
 	private String nome;
-	private String quantidade;
+	private String quantidadeE;
+	private String quantidadeM;
 	private String status;
 	private String movimentacao;
+	private String destino;
 	private String observacao;
 	
 	public Produto() {
 		
 	}
 	
+	
+	
+	public String getDestino() {
+		return destino;
+	}
+
+	public void setDestino(String destino) {
+		this.destino = destino;
+	}
+
+
 	public String getId() {
 		return id;
 	}
@@ -86,12 +99,20 @@ public class Produto extends FirestoreObject {
 		this.nome = nome;
 	}
 
-	public String getQuantidade() {
-		return quantidade;
+	public String getQuantidadeE() {
+		return quantidadeE;
 	}
 
-	public void setQuantidade(String quantidade) {
-		this.quantidade = quantidade;
+	public void setQuantidadeE(String quantidade) {
+		this.quantidadeE = quantidade;
+	}
+	
+	public String getQuantidadeM() {
+		return quantidadeM;
+	}
+
+	public void setQuantidadeM(String quantidade) {
+		this.quantidadeM = quantidade;
 	}
 
 	public String getStatus() {

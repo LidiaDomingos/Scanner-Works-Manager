@@ -17,7 +17,7 @@ class ProdutoTest {
 	
 	@Test
 	void test() {
-		produto.setId("MadeiraW200L60");
+		produto.setId("key2005WSmd");
 		produto.setLocal("Edificio Matilda");
 		produto.setUsuario("user1");
 		produto.setDateScan("2021-11-25");         //VER COMO ESCREVE
@@ -26,11 +26,13 @@ class ProdutoTest {
 		produto.setLastTime("10:00");
 		produto.setNome("Pedaco de madeira");
 		produto.setMovimentacao("NAO");
-		produto.setQuantidade("1");
+		produto.setQuantidadeE("10");
+		produto.setQuantidadeM("0");
+		produto.setDestino("");
 		produto.setStatus("EM USO");
 		produto.setObservacao("Testando BD.");
 		
-		assertEquals("MadeiraW200L60", produto.getId());
+		assertEquals("key2005WSmd", produto.getId());
 		assertEquals("Edificio Matilda", produto.getLocal());
 		assertEquals("user1", produto.getUsuario());
 		assertEquals("2021-11-25", produto.getDateScan());
@@ -39,7 +41,9 @@ class ProdutoTest {
 		assertEquals("10:00", produto.getLastTime());
 		assertEquals("Pedaco de madeira", produto.getNome());
 		assertEquals("NAO", produto.getMovimentacao());
-		assertEquals("1", produto.getQuantidade());
+		assertEquals("10", produto.getQuantidadeE());
+		assertEquals("0", produto.getQuantidadeM());
+		assertEquals("", produto.getDestino());
 		assertEquals("EM USO", produto.getStatus());
 		assertEquals("Testando BD.", produto.getObservacao());
 	}
