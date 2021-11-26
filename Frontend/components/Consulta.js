@@ -30,9 +30,9 @@ export default function Consulta(props) {
 
             <View style = {styles.buttons}>
                 <Button mode="outlined" > Cancelar </Button>
-                <Button mode="contained" onPress={() => navigation.navigate('Informações', route)}> Visuzalizar </Button>
+                <Button mode="contained" onPress={() => navigation.navigate('Informações', route)}> Visualizar </Button>
             </View>
-
+            
         </View>
     );
 }

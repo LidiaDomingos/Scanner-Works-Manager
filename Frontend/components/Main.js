@@ -9,6 +9,7 @@ import {createDrawerNavigator, DrawerContentScrollView, DrawerItemList} from '@r
 import Consulta from './Consulta'
 import Historico from './Historico'
 import Informacoes from './Informacoes'
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Drawer = createDrawerNavigator();
 
@@ -84,18 +85,19 @@ export default function Main(props) {
       // abrir a gaveta (neste caso específico do drawer).
       header: ({ navigation, route }) => {
           return (
+            <SafeAreaView>
               <View style={headerStyle}>
                   <IconButton icon="menu" color={headerTintColor} onPress={navigation.openDrawer} />
                   
-                  <View style={{flexDirection:'row' ,flexGrow:'1', justifyContent:'space-between' , alignItems:'center'}}>
+                  <View style={{flexDirection:'row' ,flexGrow:1, justifyContent:'space-between' , alignItems:'center'}}>
                     <Title style={headerTitleStyle}>{route.name}</Title>
                       <Image
                           source={require('../assets/logo_branco.png')}
-                          style={{ width: 30, height: 40, flexDirection: 'row', marginRight:'15px'}}
+                          style={{ width: 30, height: 40, flexDirection: 'row', marginRight:15}}
                       />
                   </View>  
-
               </View>
+              </SafeAreaView>
           );
       },
 
@@ -106,14 +108,16 @@ export default function Main(props) {
   };
     
     return (
-        <Drawer.Navigator initialRouteName="Historico"  
-          drawerContent={props => <CustomDrawer {...props}/>}
-          screenOptions={screenOptions}>
+       
+          <Drawer.Navigator initialRouteName="Consulta"  
+            drawerContent={props => <CustomDrawer {...props}/>}
+            screenOptions={screenOptions}>
 
-            <Drawer.Screen name="Informações" component= {Informacoes} />
-            <Drawer.Screen name="Consulta" component= {Consulta} />
-            <Drawer.Screen name="Histórico" component= {Historico} />
+              <Drawer.Screen name="Informações" component= {Informacoes} />
+              <Drawer.Screen name="Consulta" component= {Consulta} />
+              <Drawer.Screen name="Histórico" component= {Historico} />
 
-        </Drawer.Navigator>
+          </Drawer.Navigator>
+       
     );
 }

@@ -2,7 +2,9 @@ import React , { useState } from 'react';
 
 import { View , ScrollView } from 'react-native';
 
-import { TextInput , Caption , Divider , Button , Snackbar} from 'react-native-paper';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
+import { TextInput , Caption , Button } from 'react-native-paper';
 
 import { DropDown, DateTimePicker, useRequest , useGlobal} from '../lib';
 
@@ -24,7 +26,7 @@ export default function Informacoes(props) {
     const [usuario, setUsuario] = useState('');
     const [nome, setNome] = useState('');
     const [quantidade, setQuantidade] = useState('');
-    const [observacoes, setObservacoes] = useState('');
+    const [observacao, setObservacao] = useState('');
 
     const [getError, setGetError] = useState(false);
 
@@ -48,7 +50,7 @@ export default function Informacoes(props) {
     const {post, response} = useRequest(settings.url);
 
     function atualiza() {
-        post('/produtos',{
+        post('/produto',{
                 id:id,
                 local:local,
                 usuario:usuario,
@@ -60,60 +62,60 @@ export default function Informacoes(props) {
                 quantidade:quantidade,
                 status:status,
                 movimentacao:movimentacao,
-                observacoes:observacoes
+                observacao:observacao
             }
         );
     }
 
     return (
-        <ScrollView style={styles.container}>
+        <ScrollView>
+            <SafeAreaView  style={styles.container}>
+                <View>
 
-            <View>
+                    <Caption style = {styles.title}>Geral</Caption>
 
-                <Caption style = {styles.title}>Geral</Caption>
+                    <TextInput style={styles.input} label="ID" value={id} onChangeText={setId}/>
+                    <TextInput style={styles.input} label="Local" value={local} onChangeText={setLocal}/>
+                    <TextInput style={styles.input} label="Usuario" value={usuario} onChangeText={setUsuario}/>
 
-                <TextInput style={styles.input} label="ID" value={id} onChangeText={setId}/>
-                <TextInput style={styles.input} label="Local" value={local} onChangeText={setLocal}/>
-                <TextInput style={styles.input} label="Usuario" value={usuario} onChangeText={setUsuario}/>
+                    <View style={styles.tempo}>
+                        <DateTimePicker type="date" style={styles.inputDate} label="Data" value={dateScan} setValue={setDate} />
+                        <DateTimePicker type="time" style={styles.inputTime} label="Hora" value={timeScan} setValue={setNowTime} />
+                    </View>
 
-                <View style={styles.tempo}>
-                    <DateTimePicker type="date" style={styles.inputDate} label="Data" value={dateScan} setValue={setDate} />
-                    <DateTimePicker type="time" style={styles.inputTime} label="Hora" value={timeScan} setValue={setNowTime} />
                 </View>
 
-            </View>
+                <View>
 
-            <View>
+                    <Caption style = {styles.title} >Útlimo Registro</Caption>
+    
+                    <View style={styles.tempo}>
+                        <DateTimePicker type="date" style={styles.inputDate} label="Data" value={lastDate} setValue={setLastDate} />
+                        <DateTimePicker type="time" style={styles.inputTime} label="Hora" value={lastTime} setValue={setLastTime} />
+                    </View>
 
-                <Caption style = {styles.title} >Útlimo Registro</Caption>
- 
-                <View style={styles.tempo}>
-                    <DateTimePicker type="date" style={styles.inputDate} label="Data" value={lastDate} setValue={setLastDate} />
-                    <DateTimePicker type="time" style={styles.inputTime} label="Hora" value={lastTime} setValue={setLastTime} />
                 </View>
 
-            </View>
+                <View>
 
-            <View>
+                    <Caption style = {styles.title} >Informacoes sobre o item</Caption>
+                    
+                    <TextInput style={styles.input} label="Nome" value={nome} onChangeText={setNome}/>
+                    <DropDown style={styles.input} label="Tipo" list={tipoOpcoes} value={tipo} setValue={setTipo} />
+                    <TextInput style={styles.input} label="Quantidade em Estoque" value={quantidade} onChangeText={setQuantidade}/>
+                    <DropDown style={styles.input} label="Status" list={statusOpcoes} value={status} setValue={setStatus} />
+                    <DropDown style={styles.input} label="Movimentação" list={movimentacaoOpcoes} value={movimentacao} setValue={setMovimentacao} />
+                    <TextInput style={styles.input} label="Destino" disabled={true}/>
 
-                 <Caption style = {styles.title} >Informacoes sobre o item</Caption>
-                 
-                 <TextInput style={styles.input} label="Nome" value={nome} onChangeText={setNome}/>
-                 <DropDown style={styles.input} label="Tipo" list={tipoOpcoes} value={tipo} setValue={setTipo} />
-                 <TextInput style={styles.input} label="Quantidade em Estoque" value={quantidade} onChangeText={setQuantidade}/>
-                 <DropDown style={styles.input} label="Status" list={statusOpcoes} value={status} setValue={setStatus} />
-                 <DropDown style={styles.input} label="Movimentação" list={movimentacaoOpcoes} value={movimentacao} setValue={setMovimentacao} />
-                 <TextInput style={styles.input} label="Destino" disabled={true}/>
+                </View>
 
-            </View>
+                <TextInput style={styles.input} label="Observações" value={observacao} onChangeText={setObservacao}/>
 
-            <TextInput style={styles.input} label="Observações" value={observacoes} onChangeText={setObservacoes}/>
-
-            <View style = {styles.buttons}>
-                <Button mode="contained" onPress={atualiza}> Salvar </Button>
-                <Button mode="outlined" onPress={() => navigation.navigate('Histórico', route)}> Historico </Button>
-            </View>
-
+                <View style = {styles.buttons}>
+                    <Button mode="contained" onPress={atualiza}> Salvar </Button>
+                    <Button mode="outlined" onPress={() => navigation.navigate('Histórico', route)}> Historico </Button>
+                </View>
+            </SafeAreaView>
         </ScrollView>
     );
 }
