@@ -4,7 +4,7 @@ import { View , ScrollView } from 'react-native';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { TextInput ,  Button , Caption} from 'react-native-paper';
+import { TextInput ,  Button , Caption , Snackbar} from 'react-native-paper';
 
 import { DropDown, DateTimePicker, useRequest , useGlobal} from '../lib';
 
@@ -23,6 +23,7 @@ export default function Informacoes(props) {
     // const [id, setId] = useState('');
     const [id, setId] = useGlobal('id');
     const [local, setLocal] = useState('');
+    const [obra, setObra] = useState('');
     const [usuario, setUsuario] = useState('');
     const [nome, setNome] = useState('');
     const [quantidadeE, setQuantidadeE] = useState('');
@@ -30,7 +31,7 @@ export default function Informacoes(props) {
     const [destino, setDestino] = useState('');
     const [observacao, setObservacao] = useState('');
 
-    const [getError, setGetError] = useState(false);
+    const [registerError, setRegisterError] = useState(false);  // Erro ao tentar atualizar ou postar algo
 
     const movimentacaoOpcoes = [
         { label: 'Não', value: 'NAO' },
@@ -49,26 +50,30 @@ export default function Informacoes(props) {
     ]
 
     const { navigation, route } = props;
-    const {post, response} = useRequest(settings.url);
+    const {post ,  put , response: registerResponse} = useRequest(settings.url);
 
     function atualiza() {
-        post('/produto',{
-                id:id,
-                local:local,
-                usuario:usuario,
-                dateScan:dateScan,
-                timeScan:timeScan,
-                lastDate:lastDate,
-                lastTime:lastTime,
-                nome:nome,
-                quantidadeE:quantidadeE,
-                quantidadeM:quantidadeM,
-                destino:destino,
-                status:status,
-                movimentacao:movimentacao,
-                observacao:observacao
-            }
-        );
+        
+        setRegisterError(true);
+        
+        const body = {
+            id:id,
+            local:local,
+            usuario:usuario,
+            dateScan:dateScan,
+            timeScan:timeScan,
+            lastDate:lastDate,
+            lastTime:lastTime,
+            nome:nome,
+            quantidadeE:quantidadeE,
+            quantidadeM:quantidadeM,
+            destino:destino,
+            status:status,
+            movimentacao:movimentacao,
+            observacao:observacao
+        }
+        
+        post('/produto', body);
     }
 
     return (
@@ -116,8 +121,8 @@ export default function Informacoes(props) {
                         <Caption  style = {styles.title} >Localizaçao</Caption >
                     </View>
 
+                    <TextInput style={styles.input} label="Localizaçao atual" value={local} onChangeText={setLocal}/>
                     <DropDown style={styles.input} label="Movimentação" list={movimentacaoOpcoes} value={movimentacao} setValue={setMovimentacao} />
-                    <TextInput style={styles.input} label="Local" value={local} onChangeText={setLocal}/>
 
                     {movimentacao == "SIM" ? (
                         <>
@@ -136,9 +141,17 @@ export default function Informacoes(props) {
                 <TextInput style={styles.input} label="Observações" value={observacao} onChangeText={setObservacao}/>
 
                 <View style = {styles.buttons}>
-                    <Button mode="contained" onPress={atualiza}> Salvar </Button>
+                    <Button mode="contained" onPress={atualiza}  loading={registerResponse.running}> Salvar </Button>
                     <Button mode="outlined" onPress={() => navigation.navigate('Histórico', route)}> Historico </Button>
                 </View>
+
+
+                {!registerResponse.running && !registerResponse.success && (
+                <Snackbar visible={registerError} action={{ label: 'Ok', onPress: () => setRegisterError(false) }} onDismiss={() => { }}>
+                    {registerResponse.body.status === 0 ? 'Não foi possível conectar ao servidor' : `ERROR ${registerResponse.body.status}: ${registerResponse.body.message}`}
+                </Snackbar>
+                )}
+
             </SafeAreaView>
         </ScrollView>
     );
