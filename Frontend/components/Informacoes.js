@@ -4,7 +4,7 @@ import { View , ScrollView } from 'react-native';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { TextInput , Caption , Button } from 'react-native-paper';
+import { TextInput ,  Button , Caption} from 'react-native-paper';
 
 import { DropDown, DateTimePicker, useRequest , useGlobal} from '../lib';
 
@@ -25,7 +25,9 @@ export default function Informacoes(props) {
     const [local, setLocal] = useState('');
     const [usuario, setUsuario] = useState('');
     const [nome, setNome] = useState('');
-    const [quantidade, setQuantidade] = useState('');
+    const [quantidadeE, setQuantidadeE] = useState('');
+    const [quantidadeM, setQuantidadeM] = useState('');
+    const [destino, setDestino] = useState('');
     const [observacao, setObservacao] = useState('');
 
     const [getError, setGetError] = useState(false);
@@ -59,7 +61,9 @@ export default function Informacoes(props) {
                 lastDate:lastDate,
                 lastTime:lastTime,
                 nome:nome,
-                quantidade:quantidade,
+                quantidadeE:quantidadeE,
+                quantidadeM:quantidadeM,
+                destino:destino,
                 status:status,
                 movimentacao:movimentacao,
                 observacao:observacao
@@ -71,11 +75,11 @@ export default function Informacoes(props) {
         <ScrollView>
             <SafeAreaView  style={styles.container}>
                 <View>
-
-                    <Caption style = {styles.title}>Geral</Caption>
+                    <View style = {styles.sub}>
+                        <Caption  style = {styles.geral}>Geral</Caption >
+                    </View>    
 
                     <TextInput style={styles.input} label="ID" value={id} onChangeText={setId}/>
-                    <TextInput style={styles.input} label="Local" value={local} onChangeText={setLocal}/>
                     <TextInput style={styles.input} label="Usuario" value={usuario} onChangeText={setUsuario}/>
 
                     <View style={styles.tempo}>
@@ -86,8 +90,9 @@ export default function Informacoes(props) {
                 </View>
 
                 <View>
-
-                    <Caption style = {styles.title} >Útlimo Registro</Caption>
+                    <View style = {styles.sub}>
+                        <Caption  style = {styles.title} >Útlimo Registro</Caption >
+                    </View>
     
                     <View style={styles.tempo}>
                         <DateTimePicker type="date" style={styles.inputDate} label="Data" value={lastDate} setValue={setLastDate} />
@@ -98,15 +103,34 @@ export default function Informacoes(props) {
 
                 <View>
 
-                    <Caption style = {styles.title} >Informacoes sobre o item</Caption>
-                    
+                    <View style = {styles.sub}>
+                        <Caption  style = {styles.title} >Informacoes sobre o item</Caption >
+                    </View>
+
                     <TextInput style={styles.input} label="Nome" value={nome} onChangeText={setNome}/>
                     <DropDown style={styles.input} label="Tipo" list={tipoOpcoes} value={tipo} setValue={setTipo} />
-                    <TextInput style={styles.input} label="Quantidade em Estoque" value={quantidade} onChangeText={setQuantidade}/>
+                    <TextInput style={styles.input} label="Quantidade em Estoque" value={quantidadeE} onChangeText={setQuantidadeE}/>
                     <DropDown style={styles.input} label="Status" list={statusOpcoes} value={status} setValue={setStatus} />
-                    <DropDown style={styles.input} label="Movimentação" list={movimentacaoOpcoes} value={movimentacao} setValue={setMovimentacao} />
-                    <TextInput style={styles.input} label="Destino" disabled={true}/>
 
+                    <View style = {styles.sub}>
+                        <Caption  style = {styles.title} >Localizaçao</Caption >
+                    </View>
+
+                    <DropDown style={styles.input} label="Movimentação" list={movimentacaoOpcoes} value={movimentacao} setValue={setMovimentacao} />
+                    <TextInput style={styles.input} label="Local" value={local} onChangeText={setLocal}/>
+
+                    {movimentacao == "SIM" ? (
+                        <>
+                            <TextInput style={styles.input} label="Destino" value={destino} onChangeText={setDestino}/>
+                            <TextInput style={styles.input} label="Quantidade Movimentada" value={quantidadeM} onChangeText={setQuantidadeM}/>
+                        </>
+                    ) : (
+                        <>
+                            <TextInput style={styles.input} label="Destino" value={destino} onChangeText={setDestino} disabled={true}/>
+                            <TextInput style={styles.input} label="Quantidade Movimentada" value={quantidadeM} onChangeText={setQuantidadeM} disabled={true}/>
+                        </>
+                    )}
+                    
                 </View>
 
                 <TextInput style={styles.input} label="Observações" value={observacao} onChangeText={setObservacao}/>
