@@ -1,83 +1,105 @@
-import React from 'react';
+import React , {useState} from 'react';
 
 import { View , ScrollView } from 'react-native';
 
-import { Searchbar , DataTable } from 'react-native-paper';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
+import { Searchbar , ActivityIndicator, DataTable , Button , Text} from 'react-native-paper';
 
 import styles from '../styles/Historico.json';
 
+import { useSignal, useEmit, useEffect, useRequest, map } from '../lib';
+import settings from '../settings.json';
+
+function ProductRow(props){
+    
+    const {navigation, produto} = props;
+
+    return (
+        <DataTable.Row>
+            <DataTable.Cell onPress = {()=> navigation.navigate('Informações', produto)} >{produto.id}</DataTable.Cell>
+            <DataTable.Cell numeric onPress = {()=> navigation.navigate('Informações', produto)}>{produto.dateScan}</DataTable.Cell>
+            <DataTable.Cell numeric onPress = {()=> navigation.navigate('Informações', produto)}>{produto.timeScan}</DataTable.Cell>
+            <DataTable.Cell numeric onPress = {()=> navigation.navigate('Informações', produto)}>{produto.usuario}</DataTable.Cell>
+        </DataTable.Row>
+    )
+}
+
 export default function Historico(props) {
+
+    const { navigation } = props;
+    const [getError, setGetError] = useState(false);
+
+    const signal = useSignal('updated-product');
+    const emit = useEmit('updated-product');
+
+    const { get, response } = useRequest(settings.url);
 
     const [searchQuery, setSearchQuery] = React.useState('');
     const onChangeSearch = query => setSearchQuery(query);
 
+    useEffect(() => {
+        setGetError(true);
+        get('/produto/list');
+    }, [signal]);
+
     return (
-        <ScrollView style={styles.container}>
+        <>
+            {response.running ? (
+                <View style={styles.center}>
+                    <ActivityIndicator size="large" />
+                </View>
+            ) : (
 
-            <Searchbar style = {styles.filtro}
-                placeholder="Search"
-                onChangeText={onChangeSearch}
-                value={searchQuery}
-            />
+                response.success ? (
 
-            <DataTable style = {styles.tabela}>
+                    response.body === null || response.body.length === 0 ? (
+                        <View style={styles.center}>
+                            <Text>
+                                Nenhum produto cadastrado
+                            </Text>
+                        </View>
+                    ): (
+                        <ScrollView>
+                            <SafeAreaView style={styles.container}>
+                                <Searchbar style = {styles.filtro}
+                                    placeholder="Search"
+                                    onChangeText={onChangeSearch}
+                                    value={searchQuery}
+                                />
 
-                <DataTable.Header>
-                    <DataTable.Title>ID</DataTable.Title>
-                    <DataTable.Title numeric>Data</DataTable.Title>
-                    <DataTable.Title numeric>Hora</DataTable.Title>
-                    <DataTable.Title numeric>Usuário</DataTable.Title>
-                </DataTable.Header>
+                                <DataTable style = {styles.tabela}>
 
-                <DataTable.Row>
-                    <DataTable.Cell>Madeira</DataTable.Cell>
-                    <DataTable.Cell numeric>15/10/2021</DataTable.Cell>
-                    <DataTable.Cell numeric>14:30</DataTable.Cell>
-                    <DataTable.Cell numeric>user1</DataTable.Cell>
-                </DataTable.Row>
+                                    <DataTable.Header>
+                                        <DataTable.Title>ID</DataTable.Title>
+                                        <DataTable.Title numeric>Data</DataTable.Title>
+                                        <DataTable.Title numeric>Hora</DataTable.Title>
+                                        <DataTable.Title numeric>Usuário</DataTable.Title>
+                                    </DataTable.Header>
 
-                <DataTable.Row>
-                    <DataTable.Cell>Martelo</DataTable.Cell>
-                    <DataTable.Cell numeric>22/03/2021</DataTable.Cell>
-                    <DataTable.Cell numeric>4:30</DataTable.Cell>
-                    <DataTable.Cell numeric>user2</DataTable.Cell>
-                </DataTable.Row>
+                                    {map(response.body, (produto) => <ProductRow navigation={navigation} produto={produto} />)}
 
-                <DataTable.Row>
-                    <DataTable.Cell >Cano</DataTable.Cell>
-                    <DataTable.Cell numeric>07/10/2021</DataTable.Cell>
-                    <DataTable.Cell numeric>19:15</DataTable.Cell>
-                    <DataTable.Cell numeric>user3</DataTable.Cell>
-                </DataTable.Row>
-
-                <DataTable.Row>
-                    <DataTable.Cell >Madeira</DataTable.Cell>
-                    <DataTable.Cell numeric>04/09/2021</DataTable.Cell>
-                    <DataTable.Cell numeric>15:50</DataTable.Cell>
-                    <DataTable.Cell numeric>user4</DataTable.Cell>
-                </DataTable.Row>
-
-                <DataTable.Row>
-                    <DataTable.Cell >Ferro</DataTable.Cell>
-                    <DataTable.Cell numeric>25/11/2020</DataTable.Cell>
-                    <DataTable.Cell numeric>7:30</DataTable.Cell>
-                    <DataTable.Cell numeric>user5</DataTable.Cell>
-                </DataTable.Row>
-
-                <DataTable.Row>
-                    <DataTable.Cell >Cimento</DataTable.Cell>
-                    <DataTable.Cell numeric>13/11/2021</DataTable.Cell>
-                    <DataTable.Cell numeric>12:30</DataTable.Cell>
-                    <DataTable.Cell numeric>user6</DataTable.Cell>
-                </DataTable.Row>
-
-                <DataTable.Pagination
-                    page={1}
-                    numberOfPages={3}
-                    label="1-2 of 6"
-                    optionsLabel={'Rows per page'}
-                />
-                </DataTable>
-        </ScrollView>
+                                    <DataTable.Pagination
+                                        page={1}
+                                        numberOfPages={3}
+                                        label="1-2 of 6"
+                                        optionsLabel={'Rows per page'}
+                                    />
+                                    </DataTable>
+                            </SafeAreaView>
+                        </ScrollView>
+                        
+                        )
+                    
+                    ):(
+                        <View style={styles.center}>
+                            <Button mode="contained" onPress={emit}>
+                                Tentar novamente
+                            </Button>
+                        </View>
+                    )
+                )
+            }    
+        </>
     );
 }

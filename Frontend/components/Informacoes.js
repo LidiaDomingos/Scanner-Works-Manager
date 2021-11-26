@@ -130,10 +130,7 @@ export default function Informacoes(props) {
                             <TextInput style={styles.input} label="Quantidade Movimentada" value={quantidadeM} onChangeText={setQuantidadeM}/>
                         </>
                     ) : (
-                        <>
-                            <TextInput style={styles.input} label="Destino" value={destino} onChangeText={setDestino} disabled={true}/>
-                            <TextInput style={styles.input} label="Quantidade Movimentada" value={quantidadeM} onChangeText={setQuantidadeM} disabled={true}/>
-                        </>
+                        <></>
                     )}
                     
                 </View>
