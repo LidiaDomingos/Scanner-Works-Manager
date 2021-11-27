@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 
-import { Image } from 'react-native';
+import { Platform, Image } from 'react-native';
 
 export default function AspectImage(props) {
     const [basis, setBasis] = useState(0);
@@ -32,8 +32,23 @@ export default function AspectImage(props) {
     }
 
     useEffect(() => {
-        Image.getSize(props.source, onSuccess, onFailure);
-    }, []);
+        if (Platform.OS === 'web') {
+            let uri;
+            if (typeof props.source === 'string') {
+                uri = props.source;
+            } else {
+                uri = props.source.uri;
+            }
+            Image.getSize(uri, onSuccess, onFailure);
+        } else {
+            if (typeof props.source === 'number') {
+                const { width, height } = Image.resolveAssetSource(props.source);
+                onSuccess(width, height);
+            } else {
+                Image.getSize(props.source.uri, onSuccess, onFailure);
+            }
+        }
+    }, [props.source]);
 
     const style = { ...props.style };
     if (ratio > 0) {
