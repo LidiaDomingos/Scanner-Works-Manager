@@ -20,7 +20,7 @@ export default {
     },
     screenOptions: {
         headerStyle: {
-            backgroundColor: '#6200ee',
+            backgroundColor: '#2D2A9B',
         },
         headerTintColor: '#ffffff',
         headerTitleStyle: {
