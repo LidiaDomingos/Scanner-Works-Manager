@@ -108,12 +108,6 @@ export default function Main(props) {
   };
     
     return (
-<<<<<<< HEAD
-        <View style={styles.container}>
-            <Text>Abra Main.js para começar a trabalhar no seu app!</Text>
-            <StatusBar style="auto" />
-        </View>
-=======
        
           <Drawer.Navigator initialRouteName="Consulta"  
             drawerContent={props => <CustomDrawer {...props}/>}
@@ -125,6 +119,5 @@ export default function Main(props) {
 
           </Drawer.Navigator>
        
->>>>>>> TelasIniciais_Leticia
     );
 }
