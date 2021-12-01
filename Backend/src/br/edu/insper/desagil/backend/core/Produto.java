@@ -1,5 +1,7 @@
 package br.edu.insper.desagil.backend.core;
 
+import java.util.Date;
+
 import br.edu.insper.desagil.backend.database.firestore.FirestoreObject;
 
 
@@ -8,10 +10,10 @@ public class Produto extends FirestoreObject {
 	private String id;
 	private String local;
 	private String usuario;
-	private String dateScan;
-	private String timeScan;
-	private String lastDate;
-	private String lastTime;
+	private Date dateScan;
+	//private String timeScan;
+	private Date lastDate;
+	//private String lastTime;
 	private String nome;
 	private String quantidadeE;
 	private String quantidadeM;
@@ -59,37 +61,37 @@ public class Produto extends FirestoreObject {
 		this.usuario = usuario;
 	}
 
-	public String getDateScan() {
+	public Date getDateScan() {
 		return dateScan;
 	}
 
-	public void setDateScan(String dateScan) {
+	public void setDateScan(Date dateScan) {
 		this.dateScan = dateScan;
 	}
 
-	public String getTimeScan() {
-		return timeScan;
-	}
+	//public String getTimeScan() {
+	//	return timeScan;
+	//}
 
-	public void setTimeScan(String timeScan) {
-		this.timeScan = timeScan;
-	}
+	//public void setTimeScan(String timeScan) {
+	//	this.timeScan = timeScan;
+	//}
 
-	public String getLastDate() {
+	public Date getLastDate() {
 		return lastDate;
 	}
 
-	public void setLastDate(String lastDate) {
+	public void setLastDate(Date lastDate) {
 		this.lastDate = lastDate;
 	}
 
-	public String getLastTime() {
-		return lastTime;
-	}
+	//public String getLastTime() {
+	//	return lastTime;
+	//}
 
-	public void setLastTime(String lastTime) {
-		this.lastTime = lastTime;
-	}
+	//public void setLastTime(String lastTime) {
+	//	this.lastTime = lastTime;
+	//}
 
 	public String getNome() {
 		return nome;
