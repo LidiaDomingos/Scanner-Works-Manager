@@ -6,9 +6,9 @@ import React, { useRef, useState } from 'react';
 
 import { Platform, I18nManager, View } from 'react-native';
 
-import DateTimePickerCore from '@react-native-community/datetimepicker';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
-import { TextInput, TouchableRipple, Portal, Dialog, Button, useTheme } from 'react-native-paper';
+import { TextInput, TouchableRipple, useTheme } from 'react-native-paper';
 
 function WebDateTimePicker(props) {
     const ref = useRef();
@@ -126,7 +126,7 @@ function WebDateTimePicker(props) {
                         selectioncolor={props.selectionColor}
                         onFocus={onFocus}
                         onBlur={onBlur}
-                        editable={props.editable}
+                        disabled={props.editable === false}
                         type={props.type === 'time' ? 'time' : 'date'}
                         defaultValue={toString(props.value)}
                         onChange={onChange}
@@ -139,7 +139,6 @@ function WebDateTimePicker(props) {
 
 function MobileDateTimePicker(props) {
     const [open, setOpen] = useState(false);
-    const [iosValue, setIosValue] = useState();
 
     function toString(date) {
         if (props.type === 'time') {
@@ -150,35 +149,19 @@ function MobileDateTimePicker(props) {
     }
 
     function onPress() {
-        if (Platform.OS === 'ios') {
-            setIosValue(props.value);
+        if (props.editable !== false) {
+            setOpen(true);
         }
-        setOpen(true);
     }
 
-    function onDismiss() {
+    function onCancel() {
         setOpen(false);
     }
 
-    function iosOnChange(event, date) {
-        if (date instanceof Date) {
-            setIosValue(date);
-        }
-    }
-
-    function androidOnChange(event, date) {
-        onDismiss();
-        if (date instanceof Date) {
-            if (date.getFullYear() > 999) {
-                props.setValue(date);
-            }
-        }
-    }
-
-    function iosOnConfirm() {
-        onDismiss();
-        if (iosValue.getFullYear() > 999) {
-            props.setValue(iosValue);
+    function onConfirm(date) {
+        onCancel();
+        if (date.getFullYear() > 999) {
+            props.setValue(date);
         }
     }
 
@@ -262,47 +245,15 @@ function MobileDateTimePicker(props) {
                     />
                 </View>
             </TouchableRipple>
-            {Platform.OS === 'ios' ? (
-                <Portal
-                    theme={props.theme}
-                >
-                    <Dialog
-                        onDismiss={onDismiss}
-                        visible={open}
-                        theme={props.theme}
-                    >
-                        <Dialog.Content>
-                            <DateTimePickerCore
-                                mode={props.type}
-                                value={iosValue}
-                                onChange={iosOnChange}
-                            />
-                        </Dialog.Content>
-                        <Dialog.Actions>
-                            <Button
-                                onPress={onDismiss}
-                                theme={props.theme}
-                            >
-                                Cancelar
-                            </Button>
-                            <Button
-                                onPress={iosOnConfirm}
-                                theme={props.theme}
-                            >
-                                Ok
-                            </Button>
-                        </Dialog.Actions>
-                    </Dialog>
-                </Portal>
-            ) : (
-                open && (
-                    <DateTimePickerCore
-                        mode={props.type}
-                        value={props.value}
-                        onChange={androidOnChange}
-                    />
-                )
-            )}
+            <DateTimePickerModal
+                date={props.value}
+                isVisible={open}
+                mode={props.type === 'time' ? 'time' : 'date'}
+                onCancel={onCancel}
+                onChange={props.onChange}
+                onConfirm={onConfirm}
+                onHide={props.onHide}
+            />
         </>
     );
 }
