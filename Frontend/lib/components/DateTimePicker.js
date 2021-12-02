@@ -122,11 +122,10 @@ function WebDateTimePicker(props) {
                 return (
                     <input
                         style={style}
-                        disabled={props.disabled}
+                        disabled={props.editable === false}
                         selectioncolor={props.selectionColor}
                         onFocus={onFocus}
                         onBlur={onBlur}
-                        disabled={props.editable === false}
                         type={props.type === 'time' ? 'time' : 'date'}
                         defaultValue={toString(props.value)}
                         onChange={onChange}
