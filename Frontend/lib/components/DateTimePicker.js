@@ -220,7 +220,6 @@ function MobileDateTimePicker(props) {
                 <View
                     style={{
                         flexGrow: 1,
-                        alignSelf: 'stretch',
                         flexDirection: touchableStyle.flexDirection,
                         flexWrap: touchableStyle.flexWrap,
                         justifyContent: touchableStyle.justifyContent,

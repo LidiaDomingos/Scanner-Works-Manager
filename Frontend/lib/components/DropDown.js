@@ -58,7 +58,6 @@ export default function DropDown(props) {
             viewProps={{
                 style: {
                     flexGrow: 1,
-                    alignSelf: 'stretch',
                     flexDirection: touchableStyle.flexDirection,
                     flexWrap: touchableStyle.flexWrap,
                     justifyContent: touchableStyle.justifyContent,

@@ -30,7 +30,7 @@ export default function useStorage(uri) {
         error: null,
     });
 
-    function encode(uri, type) {
+    function encodeMobile(uri, type) {
         FileSystem.readAsStringAsync(uri, { encoding: FileSystem.EncodingType.Base64 })
             .then((data) => {
                 setFile({
@@ -40,6 +40,27 @@ export default function useStorage(uri) {
                     error: file.error,
                 });
             });
+    }
+
+    function encode(result) {
+        if (Platform.OS === 'web') {
+            setFile({
+                loading: false,
+                valid: true,
+                uri: result.uri,
+                error: file.error,
+            });
+        } else {
+            if (Platform.OS === 'android') {
+                const tempUri = `${FileSystem.cacheDirectory}${nanoid()}`;
+                FileSystem.copyAsync({ from: result.uri, to: tempUri })
+                    .then(() => {
+                        encodeMobile(tempUri, result.mimeType);
+                    });
+            } else {
+                encodeMobile(result.uri, result.mimeType);
+            }
+        }
     }
 
     function resize(result, resultWidth, resultHeight) {
@@ -62,7 +83,7 @@ export default function useStorage(uri) {
                         error: file.error,
                     });
                 } else {
-                    encode(resized.uri, 'image/jpeg');
+                    encodeMobile(resized.uri, 'image/jpeg');
                 }
             });
     }
@@ -74,7 +95,11 @@ export default function useStorage(uri) {
             uri: file.uri,
             error: file.error,
         });
-        DocumentPicker.getDocumentAsync({ type: type, copyToCacheDirectory: false })
+        const options = { type: type };
+        if (Platform.OS === 'android') {
+            options.copyToCacheDirectory = false;
+        }
+        DocumentPicker.getDocumentAsync(options)
             .then((result) => {
                 if (result.type === 'cancel') {
                     setFile({
@@ -84,27 +109,18 @@ export default function useStorage(uri) {
                         error: file.error,
                     });
                 } else {
-                    getImageSizeAsync(result.uri)
-                        .then(({ resultWidth, resultHeight }) => {
-                            if (resultWidth <= MAX_SIZE && resultHeight <= MAX_SIZE) {
-                                if (Platform.OS === 'web') {
-                                    setFile({
-                                        loading: false,
-                                        valid: true,
-                                        uri: result.uri,
-                                        error: file.error,
-                                    });
+                    if (result.type.startsWith('image/')) {
+                        getImageSizeAsync(result.uri)
+                            .then(({ resultWidth, resultHeight }) => {
+                                if (resultWidth <= MAX_SIZE && resultHeight <= MAX_SIZE) {
+                                    encode(result);
                                 } else {
-                                    const tempUri = `${FileSystem.cacheDirectory}${nanoid()}`;
-                                    FileSystem.copyAsync({ from: result.uri, to: tempUri })
-                                        .then(() => {
-                                            encode(tempUri, result.mimeType);
-                                        });
+                                    resize(result, resultWidth, resultHeight);
                                 }
-                            } else {
-                                resize(result, resultWidth, resultHeight);
-                            }
-                        });
+                            });
+                    } else {
+                        encode(result);
+                    }
                 }
             })
             .catch((error) => {
