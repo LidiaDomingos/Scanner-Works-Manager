@@ -47,7 +47,9 @@
     "react-native-table-component": "^1.2.1",
     "react-native-vector-icons": "^8.1.0",
     "react-native-web": "~0.13.12",
+    "react-native-webview": "^11.15.0",
     "reanimated-bottom-sheet": "^1.0.0-alpha.22",
+    "rn-pdf-reader-js": "^4.1.1",
     "three": "^0.135.0"
   },
   "devDependencies": {

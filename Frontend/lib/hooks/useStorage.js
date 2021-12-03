@@ -30,19 +30,22 @@ export default function useStorage(uri) {
         error: null,
     });
 
-    function encodeMobile(uri, type) {
+    function encodeMobile(uri, mimeType) {
         FileSystem.readAsStringAsync(uri, { encoding: FileSystem.EncodingType.Base64 })
             .then((data) => {
+                if (mimeType.includes('*')) {
+                    mimeType = '';
+                }
                 setFile({
                     loading: false,
                     valid: true,
-                    uri: `data:${type};base64,${data}`,
+                    uri: `data:${mimeType};base64,${data}`,
                     error: file.error,
                 });
             });
     }
 
-    function encode(result) {
+    function encode(result, mimeType) {
         if (Platform.OS === 'web') {
             setFile({
                 loading: false,
@@ -55,10 +58,10 @@ export default function useStorage(uri) {
                 const tempUri = `${FileSystem.cacheDirectory}${nanoid()}`;
                 FileSystem.copyAsync({ from: result.uri, to: tempUri })
                     .then(() => {
-                        encodeMobile(tempUri, result.mimeType);
+                        encodeMobile(tempUri, mimeType);
                     });
             } else {
-                encodeMobile(result.uri, result.mimeType);
+                encodeMobile(result.uri, mimeType);
             }
         }
     }
@@ -95,7 +98,10 @@ export default function useStorage(uri) {
             uri: file.uri,
             error: file.error,
         });
-        const options = { type: type };
+        const options = {};
+        if (type) {
+            options.type = type;
+        }
         if (Platform.OS === 'android') {
             options.copyToCacheDirectory = false;
         }
@@ -109,17 +115,18 @@ export default function useStorage(uri) {
                         error: file.error,
                     });
                 } else {
-                    if (result.type.startsWith('image/')) {
+                    const mimeType = result.mimeType || (result.file && result.file.type) || type || '';
+                    if (mimeType.startsWith('image/')) {
                         getImageSizeAsync(result.uri)
                             .then(({ resultWidth, resultHeight }) => {
                                 if (resultWidth <= MAX_SIZE && resultHeight <= MAX_SIZE) {
-                                    encode(result);
+                                    encode(result, mimeType);
                                 } else {
                                     resize(result, resultWidth, resultHeight);
                                 }
                             });
                     } else {
-                        encode(result);
+                        encode(result, mimeType);
                     }
                 }
             })
