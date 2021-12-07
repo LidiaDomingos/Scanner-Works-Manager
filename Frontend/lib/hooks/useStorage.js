@@ -140,5 +140,13 @@ export default function useStorage(uri) {
             });
     }
 
-    return { pick, file };
+    function skip(uri) {
+        setFile({
+            loading: false,
+            valid: true,
+            uri: uri,
+        });
+    }
+
+    return { pick, skip, file };
 }
