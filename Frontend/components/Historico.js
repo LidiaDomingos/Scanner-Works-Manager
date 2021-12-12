@@ -8,19 +8,26 @@ import { Searchbar , ActivityIndicator, DataTable , Button , Text} from 'react-n
 
 import styles from '../styles/Historico.json';
 
-import { useSignal, useEmit, useEffect, useRequest, map } from '../lib';
+import { useSignal, useEmit, useEffect, useRequest, useGlobal, map } from '../lib';
 import settings from '../settings.json';
 
 function ProductRow(props){
+
+    const [id,setId] = useGlobal('id');
+    
+    function onPress(){
+        setId(produto.id);
+        navigation.navigate('Informações');
+    }
     
     const {navigation, produto} = props;
 
     return (
         <DataTable.Row>
-            <DataTable.Cell onPress = {()=> navigation.navigate('Informações', produto)} >{produto.id}</DataTable.Cell>
-            <DataTable.Cell numeric onPress = {()=> navigation.navigate('Informações', produto)}>{produto.dateScan}</DataTable.Cell>
-            <DataTable.Cell numeric onPress = {()=> navigation.navigate('Informações', produto)}>{produto.timeScan}</DataTable.Cell>
-            <DataTable.Cell numeric onPress = {()=> navigation.navigate('Informações', produto)}>{produto.usuario}</DataTable.Cell>
+            <DataTable.Cell onPress = {onPress} >{produto.id}</DataTable.Cell>
+            <DataTable.Cell numeric onPress = {onPress} >{produto.dateScan}</DataTable.Cell>
+            <DataTable.Cell numeric onPress = {onPress} >{produto.timeScan}</DataTable.Cell>
+            <DataTable.Cell numeric onPress = {onPress}>{produto.usuario}</DataTable.Cell>
         </DataTable.Row>
     )
 }

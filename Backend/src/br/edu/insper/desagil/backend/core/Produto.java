@@ -16,6 +16,7 @@ public class Produto extends FirestoreObject {
 	private String quantidadeE;
 	private String quantidadeM;
 	private String status;
+	private String tipo;
 	private String movimentacao;
 	private String destino;
 	private String observacao;
@@ -24,7 +25,13 @@ public class Produto extends FirestoreObject {
 		
 	}
 	
-	
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
 	
 	public String getDestino() {
 		return destino;

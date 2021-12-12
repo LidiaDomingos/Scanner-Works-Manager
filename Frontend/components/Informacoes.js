@@ -4,9 +4,9 @@ import { View , ScrollView } from 'react-native';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { TextInput ,  Button , Caption , Snackbar} from 'react-native-paper';
+import { Text, TextInput ,  Button , Caption , Snackbar, ActivityIndicator} from 'react-native-paper';
 
-import { DropDown, DateTimePicker, useRequest , useGlobal} from '../lib';
+import { DropDown, DateTimePicker, useRequest , useEmit, useGlobal , useEffect} from '../lib';
 
 import styles from '../styles/Informacoes.json';
 import settings from '../settings.json';
@@ -20,7 +20,6 @@ export default function Informacoes(props) {
     const [movimentacao, setMovimentacao] = useState('NAO');
     const [status, setStatus] = useState('USO');
     const [tipo, setTipo] = useState('MATERIAL');
-    // const [id, setId] = useState('');
     const [id, setId] = useGlobal('id');
     const [local, setLocal] = useState('');
     const [obra, setObra] = useState('');
@@ -31,6 +30,7 @@ export default function Informacoes(props) {
     const [destino, setDestino] = useState('');
     const [observacao, setObservacao] = useState('');
 
+    const [getError, setGetError] = useState(false);
     const [registerError, setRegisterError] = useState(false);  // Erro ao tentar atualizar ou postar algo
 
     const movimentacaoOpcoes = [
@@ -49,8 +49,10 @@ export default function Informacoes(props) {
         {label: 'Ferramenta' , value: 'FERRAMENTA'}
     ]
 
+    const emit = useEmit('get-id');
+
     const { navigation, route } = props;
-    const {post ,  put , response: registerResponse} = useRequest(settings.url);
+    const { get ,  put , response: registerResponse , skip} = useRequest(settings.url);
 
     function atualiza() {
         
@@ -65,6 +67,7 @@ export default function Informacoes(props) {
             lastDate:lastDate,
             lastTime:lastTime,
             nome:nome,
+            tipo:tipo,
             quantidadeE:quantidadeE,
             quantidadeM:quantidadeM,
             destino:destino,
@@ -72,84 +75,120 @@ export default function Informacoes(props) {
             movimentacao:movimentacao,
             observacao:observacao
         }
+
+        body.key = route.key;
+        put('/produto',body);
         
-        post('/produto', body);
     }
 
+    useEffect(()=>{
+        setRegisterError(true);
+        get('/produto?id='+id);
+        console.log(skip);
+    }, [id])                                  
+
     return (
-        <ScrollView>
-            <SafeAreaView  style={styles.container}>
-                <View>
-                    <View style = {styles.sub}>
-                        <Caption  style = {styles.geral}>Geral</Caption >
-                    </View>    
+        
+        <>
+        {registerResponse.running ? (
+            <View style={styles.center}>
+                <ActivityIndicator size="large" />
+            </View>
+        ) : (
+            registerResponse.success ? (
+                registerResponse.body === null || registerResponse.body.length === 0 ? (
+                    <View style={styles.center}>
+                        <Text>
+                            Nenhum produto cadastrado
+                        </Text>
+                    </View>
+        ):(    
+        
+            <ScrollView>
+                <SafeAreaView  style={styles.container}>
+                    <View>
+                        <View style = {styles.sub}>
+                            <Caption  style = {styles.geral}>Geral</Caption >
+                        </View>    
 
-                    <TextInput style={styles.input} label="ID" value={id} onChangeText={setId}/>
-                    <TextInput style={styles.input} label="Usuario" value={usuario} onChangeText={setUsuario}/>
+                        <TextInput style={styles.input} label="ID" value={id} onChangeText={setId}/>
+                        <TextInput style={styles.input} label="Usuario" value={registerResponse.body.usuario} onChangeText={setUsuario}/>
 
-                    <View style={styles.tempo}>
-                        <DateTimePicker type="date" style={styles.inputDate} label="Data" value={dateScan} setValue={setDate} />
-                        <DateTimePicker type="time" style={styles.inputTime} label="Hora" value={timeScan} setValue={setNowTime} />
+                        <View style={styles.tempo}>
+                            <DateTimePicker type="date" style={styles.inputDate} label="Data" value={dateScan} setValue={setDate} disabled={true}/>
+                            <DateTimePicker type="time" style={styles.inputTime} label="Hora" value={timeScan} setValue={setNowTime} disabled={true}/>
+                        </View>
+
                     </View>
 
-                </View>
+                    <View>
+                        <View style = {styles.sub}>
+                            <Caption  style = {styles.title}>Último Registro</Caption >
+                        </View>
+        
+                        <View style={styles.tempo}>
+                            <DateTimePicker type="date" style={styles.inputDate} label="Data" value={new Date(registerResponse.body.lastDate)} setValue={setLastDate} disabled={true}/>
+                            <DateTimePicker type="time" style={styles.inputTime} label="Hora" value={new Date(registerResponse.body.lastTime)} setValue={setLastTime} disabled={true}/>
+                        </View>
 
-                <View>
-                    <View style = {styles.sub}>
-                        <Caption  style = {styles.title} >Útlimo Registro</Caption >
-                    </View>
-    
-                    <View style={styles.tempo}>
-                        <DateTimePicker type="date" style={styles.inputDate} label="Data" value={lastDate} setValue={setLastDate} />
-                        <DateTimePicker type="time" style={styles.inputTime} label="Hora" value={lastTime} setValue={setLastTime} />
-                    </View>
-
-                </View>
-
-                <View>
-
-                    <View style = {styles.sub}>
-                        <Caption  style = {styles.title} >Informacoes sobre o item</Caption >
                     </View>
 
-                    <TextInput style={styles.input} label="Nome" value={nome} onChangeText={setNome}/>
-                    <DropDown style={styles.input} label="Tipo" list={tipoOpcoes} value={tipo} setValue={setTipo} />
-                    <TextInput style={styles.input} label="Quantidade em Estoque" value={quantidadeE} onChangeText={setQuantidadeE}/>
-                    <DropDown style={styles.input} label="Status" list={statusOpcoes} value={status} setValue={setStatus} />
+                    <View>
 
-                    <View style = {styles.sub}>
-                        <Caption  style = {styles.title} >Localizaçao</Caption >
+                        <View style = {styles.sub}>
+                            <Caption  style = {styles.title} >Informacoes sobre o item</Caption >
+                        </View>
+
+                        <TextInput style={styles.input} label="Nome" value={registerResponse.body.nome} onChangeText={setNome}/>
+                        <DropDown style={styles.input} label="Tipo" list={tipoOpcoes} value={registerResponse.body.tipo} setValue={setTipo} />
+                        <TextInput style={styles.input} label="Quantidade em Estoque" defaultValue={registerResponse.body.quantidadeE} onChangeText={setQuantidadeE}/>
+                        <DropDown style={styles.input} label="Status" list={statusOpcoes} placeholder={registerResponse.body.status} setValue={setStatus} />
+
+                        <View style = {styles.sub}>
+                            <Caption  style = {styles.title} >Localizaçao</Caption >
+                        </View>
+
+                        <TextInput style={styles.input} label="Localizaçao atual" defaultValue={registerResponse.body.local} onChangeText={setLocal}/>
+                        <DropDown style={styles.input} label="Movimentação" list={movimentacaoOpcoes} defaultValue={registerResponse.body.movimentacao} setValue={setMovimentacao} />
+
+                        {movimentacao == "SIM" ? (
+                            <>
+                                <TextInput style={styles.input} label="Destino" defaultValue={registerResponse.body.destino} onChangeText={setDestino}/>
+                                <TextInput style={styles.input} label="Quantidade Movimentada" defaultValue={registerResponse.body.quantidadeM} onChangeText={setQuantidadeM}/>
+                            </>
+                        ) : (
+                            <></>
+                        )}
+                        
                     </View>
 
-                    <TextInput style={styles.input} label="Localizaçao atual" value={local} onChangeText={setLocal}/>
-                    <DropDown style={styles.input} label="Movimentação" list={movimentacaoOpcoes} value={movimentacao} setValue={setMovimentacao} />
+                    <TextInput style={styles.input} label="Observações" value={registerResponse.body.observacao} onChangeText={setObservacao}/>
 
-                    {movimentacao == "SIM" ? (
-                        <>
-                            <TextInput style={styles.input} label="Destino" value={destino} onChangeText={setDestino}/>
-                            <TextInput style={styles.input} label="Quantidade Movimentada" value={quantidadeM} onChangeText={setQuantidadeM}/>
-                        </>
-                    ) : (
-                        <></>
+                    <View style = {styles.buttons}>
+                        <Button mode="contained" onPress={atualiza}  loading={registerResponse.running}> Salvar </Button>
+                        <Button mode="outlined" onPress={() => navigation.navigate('Histórico', route)}> Historico </Button>
+                    </View>
+
+
+                    {!registerResponse.running && !registerResponse.success && (
+                    <Snackbar visible={registerError} action={{ label: 'Ok', onPress: () => setRegisterError(false) }} onDismiss={() => { }}>
+                        {registerResponse.body.status === 0 ? 'Não foi possível conectar ao servidor' : `ERROR ${registerResponse.body.status}: ${registerResponse.body.message}`}
+                    </Snackbar>
                     )}
-                    
-                </View>
 
-                <TextInput style={styles.input} label="Observações" value={observacao} onChangeText={setObservacao}/>
-
-                <View style = {styles.buttons}>
-                    <Button mode="contained" onPress={atualiza}  loading={registerResponse.running}> Salvar </Button>
-                    <Button mode="outlined" onPress={() => navigation.navigate('Histórico', route)}> Historico </Button>
-                </View>
-
-
-                {!registerResponse.running && !registerResponse.success && (
-                <Snackbar visible={registerError} action={{ label: 'Ok', onPress: () => setRegisterError(false) }} onDismiss={() => { }}>
-                    {registerResponse.body.status === 0 ? 'Não foi possível conectar ao servidor' : `ERROR ${registerResponse.body.status}: ${registerResponse.body.message}`}
-                </Snackbar>
-                )}
-
-            </SafeAreaView>
-        </ScrollView>
+                </SafeAreaView>
+            </ScrollView>
+            )
+        ):(
+            <View style={styles.center}>
+                <Button mode="contained" onPress={emit}>
+                    Tentar novamente
+                </Button>
+            </View>
+           )
+        
+        )
+      }
+    </>
     );
 }
