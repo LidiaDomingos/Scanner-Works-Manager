@@ -9,7 +9,7 @@ const signames = [];
 const contexts = {};
 
 function createGlobal(component, name, value) {
-    const Context = createContext(null);
+    const Context = createContext();
     const ContextProvider = function (props) {
         const state = useState(value);
         return (
@@ -28,14 +28,14 @@ function createGlobal(component, name, value) {
 
 function createGlobals(component) {
     if (!(signals instanceof Array)) {
-        throw new Error('Signals must be an array');
+        throw new TypeError('Signals must be an array');
     }
     if (typeof globals !== 'object') {
-        throw new Error('Globals must be an object');
+        throw new TypeError('Globals must be an object');
     }
     for (const [index, signal] of signals.entries()) {
         if (typeof signal !== 'string') {
-            throw new Error(`Signal ${index} must be a string`);
+            throw new TypeError(`Signal ${index} must be a string`);
         }
         if (signal in globals) {
             throw new Error(`Signal '${signal}' cannot be a global`);

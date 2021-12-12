@@ -15,9 +15,11 @@ export default function DropDown(props) {
     }
 
     function showDropDown() {
-        setOpen(true);
-        if (props.showDropDown) {
-            props.showDropDown();
+        if (props.editable !== false) {
+            setOpen(true);
+            if (props.showDropDown) {
+                props.showDropDown();
+            }
         }
     }
 
