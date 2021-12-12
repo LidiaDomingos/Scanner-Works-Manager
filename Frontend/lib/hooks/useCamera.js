@@ -267,7 +267,6 @@ export default function useCamera(uri, square) {
                     <View
                         style={{
                             flexGrow: 1,
-                            alignSelf: 'stretch',
                             flexDirection: windowWidth < windowHeight ? 'column' : 'row',
                             position: 'absolute',
                             top: 0,
@@ -309,7 +308,6 @@ export default function useCamera(uri, square) {
                         ref={ref}
                         style={{
                             flexGrow: 1,
-                            alignSelf: 'stretch',
                             position: 'absolute',
                             top: 0,
                             right: 0,
@@ -323,7 +321,6 @@ export default function useCamera(uri, square) {
                     <View
                         style={{
                             flexGrow: 1,
-                            alignSelf: 'stretch',
                             flexDirection: windowWidth < windowHeight ? 'column' : 'row',
                             justifyContent: 'space-between',
                             position: 'absolute',
@@ -352,7 +349,6 @@ export default function useCamera(uri, square) {
                 <View
                     style={{
                         flexGrow: 1,
-                        alignSelf: 'stretch',
                         flexDirection: style.flexDirection,
                         flexWrap: style.flexWrap,
                         justifyContent: style.justifyContent,

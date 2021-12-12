@@ -15,9 +15,11 @@ export default function DropDown(props) {
     }
 
     function showDropDown() {
-        setOpen(true);
-        if (props.showDropDown) {
-            props.showDropDown();
+        if (props.editable !== false) {
+            setOpen(true);
+            if (props.showDropDown) {
+                props.showDropDown();
+            }
         }
     }
 
@@ -58,7 +60,6 @@ export default function DropDown(props) {
             viewProps={{
                 style: {
                     flexGrow: 1,
-                    alignSelf: 'stretch',
                     flexDirection: touchableStyle.flexDirection,
                     flexWrap: touchableStyle.flexWrap,
                     justifyContent: touchableStyle.justifyContent,

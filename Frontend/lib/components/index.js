@@ -7,5 +7,7 @@ import Icon from './Icon';
 import DropDown from './DropDown';
 import DateTimePicker from './DateTimePicker';
 import DateTimeProvider from './DateTimeProvider';
+import PDFReader from './PDFReader';
+import ThreeView from './ThreeView';
 
-export { Rounded, AspectView, AspectImage, Icon, DropDown, DateTimePicker, DateTimeProvider };
+export { Rounded, AspectView, AspectImage, Icon, DropDown, DateTimePicker, DateTimeProvider, PDFReader, ThreeView };
