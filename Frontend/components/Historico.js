@@ -22,11 +22,17 @@ function ProductRow(props){
     
     const {navigation, produto} = props;
 
+    let data = new Date(produto.dateScan);
+    let dataFormatada = ((data.getDate() )) + "/" + ((data.getMonth() + 1)) + "/" + data.getFullYear(); 
+
+    var today = new Date(produto.timeScan);
+    var time = today.getHours() + ":" + today.getMinutes();
+
     return (
         <DataTable.Row>
             <DataTable.Cell onPress = {onPress} >{produto.id}</DataTable.Cell>
-            <DataTable.Cell numeric onPress = {onPress} >{produto.dateScan}</DataTable.Cell>
-            <DataTable.Cell numeric onPress = {onPress} >{produto.timeScan}</DataTable.Cell>
+            <DataTable.Cell numeric onPress = {onPress} >{dataFormatada}</DataTable.Cell>
+            <DataTable.Cell numeric onPress = {onPress} >{time}</DataTable.Cell>
             <DataTable.Cell numeric onPress = {onPress}>{produto.usuario}</DataTable.Cell>
         </DataTable.Row>
     )
