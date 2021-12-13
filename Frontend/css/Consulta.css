@@ -8,12 +8,10 @@ card {
 }
 
 buttons {
-    flex-direction: row;
-
     margin-top: 20px;
     margin-bottom: 40px;
-
-    justify-content: space-evenly;
+    justify-content: center;
+    align-items: center;
 }
 
 buttonScan {
@@ -34,6 +32,19 @@ scan {
     flex-grow: 2;
     justify-content: center;
     align-items: center;
+}
+
+texto {
+    flex-grow: 0.5;
+    justify-content: center;
+    align-items: center;
+}
+
+textoAuxiliar {
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+    width:70%;
 }
 
 input {

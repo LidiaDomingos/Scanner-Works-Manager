@@ -66,12 +66,18 @@ export default function Consulta(props) {
                 </Snackbar>
             )}
         </>
+
+            <View style = {styles.texto}>
+                <Caption style={styles.textoAuxiliar}>
+                    Centralize o QRCode clicando em ESCANEAR ou digtite o ID no campo de texto.
+                </Caption>
+            </View>
+
             <Card style = {styles.card}>
                 <TextInput  style={styles.input} label = "Digite ID" value={inputId} onChangeText={setInputId}></TextInput>
             </Card>
-
+  
             <View style = {styles.buttons}>
-                <Button mode="outlined" > Cancelar </Button>
                 <Button mode="contained" onPress={visualizar}> Visualizar </Button>
             </View>
 
