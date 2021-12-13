@@ -113,7 +113,7 @@ export default function Main(props) {
             drawerContent={props => <CustomDrawer {...props}/>}
             screenOptions={screenOptions}>
 
-              <Drawer.Screen name="Informações" component= {Informacoes} />
+              <Drawer.Screen name="Informações" component= {Informacoes} options={{drawerItemStyle: { height: 0 }}}/>
               <Drawer.Screen name="Consulta" component= {Consulta} />
               <Drawer.Screen name="Histórico" component= {Historico} />
 
