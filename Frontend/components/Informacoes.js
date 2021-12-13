@@ -60,8 +60,8 @@ export default function Informacoes(props) {
         
         const body = {
             id:id,
-            local:local,
-            usuario:usuario,
+            local:registerResponse.body.local,
+            usuario:registerResponse.body.usuario,
             dateScan:dateScan,
             timeScan:timeScan,
             lastDate:lastDate,
@@ -78,13 +78,14 @@ export default function Informacoes(props) {
 
         body.key = route.key;
         put('/produto',body);
+
+        navigation.navigate('Histórico', route)
         
     }
 
     useEffect(()=>{
         setRegisterError(true);
         get('/produto?id='+id);
-        console.log(skip);
     }, [id])                                  
 
     return (
@@ -112,7 +113,7 @@ export default function Informacoes(props) {
                         </View>    
 
                         <TextInput style={styles.input} label="ID" value={id} onChangeText={setId}/>
-                        <TextInput style={styles.input} label="Usuario" value={registerResponse.body.usuario} onChangeText={setUsuario}/>
+                        <TextInput style={styles.input} label="Usuario" value={registerResponse.body.usuario} onChangeText={(novoUsuario) => {skip({ ...registerResponse.body, usuario: novoUsuario})}}/>
 
                         <View style={styles.tempo}>
                             <DateTimePicker type="date" style={styles.inputDate} label="Data" value={dateScan} setValue={setDate} disabled={true}/>
@@ -141,20 +142,20 @@ export default function Informacoes(props) {
 
                         <TextInput style={styles.input} label="Nome" value={registerResponse.body.nome} onChangeText={setNome}/>
                         <DropDown style={styles.input} label="Tipo" list={tipoOpcoes} value={registerResponse.body.tipo} setValue={setTipo} />
-                        <TextInput style={styles.input} label="Quantidade em Estoque" defaultValue={registerResponse.body.quantidadeE} onChangeText={setQuantidadeE}/>
-                        <DropDown style={styles.input} label="Status" list={statusOpcoes} placeholder={registerResponse.body.status} setValue={setStatus} />
+                        <TextInput style={styles.input} label="Quantidade em Estoque" value={registerResponse.body.quantidadeE} onChangeText={(novaQuantidadeE) => {skip({ ...registerResponse.body, quantidadeE: novaQuantidadeE})}}/>
+                        <DropDown style={styles.input} label="Status" list={statusOpcoes} value={registerResponse.body.status} setValue={(novoStatus) => {skip({ ...registerResponse.body, status: novoStatus})}} />
 
                         <View style = {styles.sub}>
                             <Caption  style = {styles.title} >Localizaçao</Caption >
                         </View>
 
-                        <TextInput style={styles.input} label="Localizaçao atual" defaultValue={registerResponse.body.local} onChangeText={setLocal}/>
-                        <DropDown style={styles.input} label="Movimentação" list={movimentacaoOpcoes} defaultValue={registerResponse.body.movimentacao} setValue={setMovimentacao} />
+                        <TextInput style={styles.input} label="Localizaçao atual" value={registerResponse.body.local} onChangeText={setLocal}/>
+                        <DropDown style={styles.input} label="Movimentação" list={movimentacaoOpcoes} value={registerResponse.body.movimentacao} setValue={setMovimentacao} />
 
                         {movimentacao == "SIM" ? (
                             <>
-                                <TextInput style={styles.input} label="Destino" defaultValue={registerResponse.body.destino} onChangeText={setDestino}/>
-                                <TextInput style={styles.input} label="Quantidade Movimentada" defaultValue={registerResponse.body.quantidadeM} onChangeText={setQuantidadeM}/>
+                                <TextInput style={styles.input} label="Destino" value={registerResponse.body.destino} onChangeText={setDestino}/>
+                                <TextInput style={styles.input} label="Quantidade Movimentada" value={registerResponse.body.quantidadeM} onChangeText={setQuantidadeM}/>
                             </>
                         ) : (
                             <></>
