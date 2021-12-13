@@ -25,8 +25,8 @@ function ProductRow(props){
     let data = new Date(produto.dateScan);
     let dataFormatada = ((data.getDate() )) + "/" + ((data.getMonth() + 1)) + "/" + data.getFullYear(); 
 
-    var today = new Date(produto.timeScan);                                   
-    var time = today.getHours() + ":" + today.getMinutes();
+    let today = new Date(produto.timeScan);                                   
+    let time = today.getHours() + ":" + today.getMinutes();
 
     return (
         <DataTable.Row>

@@ -50,9 +50,11 @@ export default function Informacoes(props) {
     ]
 
     const emit = useEmit('get-id');
+    const emitAtualiza = useEmit('updated-product');
 
     const { navigation, route } = props;
-    const { get ,  put , response: registerResponse , skip} = useRequest(settings.url);
+    const { get ,  response: registerResponse , skip} = useRequest(settings.url);
+    const {put, response: atualizaResponse} = useRequest(settings.url);
 
     function atualiza() {
         
@@ -68,25 +70,34 @@ export default function Informacoes(props) {
             lastTime:lastTime,
             nome:nome,
             tipo:tipo,
-            quantidadeE:quantidadeE,
-            quantidadeM:quantidadeM,
-            destino:destino,
-            status:status,
-            movimentacao:movimentacao,
-            observacao:observacao
+            quantidadeE:registerResponse.body.quantidadeE,
+            quantidadeM:registerResponse.body.quantidadeM,
+            destino:registerResponse.body.destino,
+            status:registerResponse.body.status,
+            movimentacao:registerResponse.body.movimentacao,
+            observacao:registerResponse.body.observacao
         }
 
         body.key = route.key;
         put('/produto',body);
 
-        navigation.navigate('Histórico', route)
-        
     }
 
     useEffect(()=>{
         setRegisterError(true);
         get('/produto?id='+id);
-    }, [id])                                  
+    }, [id]) 
+
+    useEffect(()=>{
+        setRegisterError(true);
+
+        if ((atualizaResponse.success && atualizaResponse.body !== null)) {
+            emitAtualiza()
+            navigation.navigate('Histórico', route)
+        }
+
+    }, [atualizaResponse]) 
+
 
     return (
         
@@ -149,13 +160,13 @@ export default function Informacoes(props) {
                             <Caption  style = {styles.title} >Localizaçao</Caption >
                         </View>
 
-                        <TextInput style={styles.input} label="Localizaçao atual" value={registerResponse.body.local} onChangeText={setLocal}/>
-                        <DropDown style={styles.input} label="Movimentação" list={movimentacaoOpcoes} value={registerResponse.body.movimentacao} setValue={setMovimentacao} />
+                        <TextInput style={styles.input} label="Localizaçao atual" value={registerResponse.body.local} onChangeText={(novoLocal) => {skip({ ...registerResponse.body, local: novoLocal})}}/>
+                        <DropDown style={styles.input} label="Movimentação" list={movimentacaoOpcoes} value={registerResponse.body.movimentacao} setValue={(novaMovimentacao) => {skip({ ...registerResponse.body, movimentacao: novaMovimentacao})}} />
 
                         {movimentacao == "SIM" ? (
                             <>
-                                <TextInput style={styles.input} label="Destino" value={registerResponse.body.destino} onChangeText={setDestino}/>
-                                <TextInput style={styles.input} label="Quantidade Movimentada" value={registerResponse.body.quantidadeM} onChangeText={setQuantidadeM}/>
+                                <TextInput style={styles.input} label="Destino" value={registerResponse.body.destino} onChangeText={(novoDestino) => {skip({ ...registerResponse.body, destino: novoDestino})}}/>
+                                <TextInput style={styles.input} label="Quantidade Movimentada" value={registerResponse.body.quantidadeM} onChangeText={(novaQuantidade) => {skip({ ...registerResponse.body, quantidadeM: novaQuantidade})}}/>
                             </>
                         ) : (
                             <></>
@@ -163,10 +174,10 @@ export default function Informacoes(props) {
                         
                     </View>
 
-                    <TextInput style={styles.input} label="Observações" value={registerResponse.body.observacao} onChangeText={setObservacao}/>
+                    <TextInput style={styles.input} label="Observações" value={registerResponse.body.observacao} onChangeText={(novaObs) => {skip({ ...registerResponse.body, observacao: novaObs})}}/>
 
                     <View style = {styles.buttons}>
-                        <Button mode="contained" onPress={atualiza}  loading={registerResponse.running}> Salvar </Button>
+                        <Button mode="contained" onPress={atualiza}  loading={atualizaResponse.running}> Salvar </Button>
                         <Button mode="outlined" onPress={() => navigation.navigate('Histórico', route)}> Historico </Button>
                     </View>
 
