@@ -13,6 +13,9 @@ import settings from '../settings.json';
 
 export default function Informacoes(props) {
 
+    const { navigation, route } = props;
+    const produto = route.params;
+
     const [dateScan, setDate] = useState(new Date());
     const [timeScan, setNowTime] = useState(new Date());
     const [lastDate, setLastDate] = useState(new Date());
@@ -33,6 +36,9 @@ export default function Informacoes(props) {
     const [getError, setGetError] = useState(false);
     const [registerError, setRegisterError] = useState(false);  // Erro ao tentar atualizar ou postar algo
 
+    const [removeError, setRemoveError] = useState(false);
+    const [removeVisible, setRemoveVisible] = useState(false);
+
     const movimentacaoOpcoes = [
         { label: 'Não', value: 'NAO' },
         { label: 'Sim', value: 'SIM' },
@@ -52,34 +58,33 @@ export default function Informacoes(props) {
     const emit = useEmit('get-id');
     const emitAtualiza = useEmit('updated-product');
 
-    const { navigation, route } = props;
-    const { get ,  response: registerResponse , skip} = useRequest(settings.url);
+    const { get ,  response: getResponse , skip} = useRequest(settings.url);
     const {put, response: atualizaResponse} = useRequest(settings.url);
-
+    const { del, response: removeResponse } = useRequest(settings.url);
 
     function onChangeTextUsuario(novoUsuario){
-        skip({ ...registerResponse.body, usuario: novoUsuario})
+        skip({ ...getResponse.body, usuario: novoUsuario})
     }
     function onChangeTextQuantidadeE(novaQuantidade){
-        skip({ ...registerResponse.body, quantidadeE: novaQuantidade})
+        skip({ ...getResponse.body, quantidadeE: novaQuantidade})
     }
     function onChangeTextStatus(novoStatus){
-        skip({ ...registerResponse.body, status: novoStatus})
+        skip({ ...getResponse.body, status: novoStatus})
     }
     function onChangeTextLocal(novoLocal){
-        skip({ ...registerResponse.body, local: novoLocal})
+        skip({ ...getResponse.body, local: novoLocal})
     }
     function onChangeTextMovimentacao(novaMovimentacao){
-        skip({ ...registerResponse.body, movimentacao: novaMovimentacao})
+        skip({ ...getResponse.body, movimentacao: novaMovimentacao})
     }
     function onChangeTextDestino(novoDestino){
-        skip({ ...registerResponse.body, destino: novoDestino})
+        skip({ ...getResponse.body, destino: novoDestino})
     }
     function onChangeTextQuantidadeM(novaQuantidadeM){
-        skip({ ...registerResponse.body, quantidadeM: novaQuantidadeM})
+        skip({ ...getResponse.body, quantidadeM: novaQuantidadeM})
     }
     function onChangeTextObservacoes(novaObservacao){
-        skip({ ...registerResponse.body, observacao: novaObservacao})
+        skip({ ...getResponse.body, observacao: novaObservacao})
     }
     
     function atualiza() {
@@ -88,20 +93,20 @@ export default function Informacoes(props) {
         
         const body = {
             id:id,
-            local:registerResponse.body.local,
-            usuario:registerResponse.body.usuario,
+            local:getResponse.body.local,
+            usuario:getResponse.body.usuario,
             dateScan:dateScan,
             timeScan:timeScan,
             lastDate:lastDate,
             lastTime:lastTime,
             nome:nome,
             tipo:tipo,
-            quantidadeE:registerResponse.body.quantidadeE,
-            quantidadeM:registerResponse.body.quantidadeM,
-            destino:registerResponse.body.destino,
-            status:registerResponse.body.status,
-            movimentacao:registerResponse.body.movimentacao,
-            observacao:registerResponse.body.observacao
+            quantidadeE:getResponse.body.quantidadeE,
+            quantidadeM:getResponse.body.quantidadeM,
+            destino:getResponse.body.destino,
+            status:getResponse.body.status,
+            movimentacao:getResponse.body.movimentacao,
+            observacao:getResponse.body.observacao
         }
 
         body.key = route.key;
@@ -109,32 +114,42 @@ export default function Informacoes(props) {
 
     }
 
+    function onDismissRemove() {
+        setRemoveVisible(false);
+    }
+
+    function onConfirmRemove() {
+        onDismissRemove();
+        setRemoveError(true);
+        del(`/gato?key=${gato.key}`);
+    }
+
     useEffect(()=>{
-        setRegisterError(true);
+        setGetError(true);
         get('/produto?id='+id);
     }, [id]) 
 
     useEffect(()=>{
         setRegisterError(true);
 
-        if ((atualizaResponse.success && atualizaResponse.body !== null)) {
+        if ((atualizaResponse.success && atualizaResponse.body !== null) || (removeResponse.success && removeResponse.body !== null)) {
             emitAtualiza()
             navigation.navigate('Histórico', route)
         }
 
-    }, [atualizaResponse]) 
+    }, [atualizaResponse,removeResponse]) 
 
 
     return (
         
         <>
-        {registerResponse.running ? (
+        {getResponse.running ? (
             <View style={styles.center}>
                 <ActivityIndicator size="large" />
             </View>
         ) : (
-            registerResponse.success ? (
-                registerResponse.body === null || registerResponse.body.length === 0 ? (
+            getResponse.success ? (
+                getResponse.body === null || getResponse.body.length === 0 ? (
                     <View style={styles.center}>
                         <Text>
                             Nenhum produto cadastrado
@@ -150,7 +165,7 @@ export default function Informacoes(props) {
                         </View>    
 
                         <TextInput style={styles.input} label="ID" value={id} onChangeText={setId} disabled={true}/>
-                        <TextInput style={styles.input} label="Usuario" value={registerResponse.body.usuario} onChangeText={onChangeTextUsuario}/>
+                        <TextInput style={styles.input} label="Usuario" value={getResponse.body.usuario} onChangeText={onChangeTextUsuario}/>
 
                         <View style={styles.tempo}>
                             <DateTimePicker type="date" style={styles.inputDate} label="Data" value={dateScan} setValue={setDate} disabled={true}/>
@@ -165,8 +180,8 @@ export default function Informacoes(props) {
                         </View>
         
                         <View style={styles.tempo}>
-                            <DateTimePicker type="date" style={styles.inputDate} label="Data" value={new Date(registerResponse.body.lastDate)} setValue={setLastDate} disabled={true}/>
-                            <DateTimePicker type="time" style={styles.inputTime} label="Hora" value={new Date(registerResponse.body.lastTime)} setValue={setLastTime} disabled={true}/>
+                            <DateTimePicker type="date" style={styles.inputDate} label="Data" value={new Date(getResponse.body.lastDate)} setValue={setLastDate} disabled={true}/>
+                            <DateTimePicker type="time" style={styles.inputTime} label="Hora" value={new Date(getResponse.body.lastTime)} setValue={setLastTime} disabled={true}/>
                         </View>
 
                     </View>
@@ -177,22 +192,22 @@ export default function Informacoes(props) {
                             <Caption  style = {styles.title} >Informacoes sobre o item</Caption >
                         </View>
 
-                        <TextInput style={styles.input} label="Nome" value={registerResponse.body.nome} onChangeText={setNome} disabled={true}/>
-                        <DropDown style={styles.input} label="Tipo" list={tipoOpcoes} value={registerResponse.body.tipo} setValue={setTipo} disabled={true}/>
-                        <DropDown style={styles.input} label="Status" list={statusOpcoes} value={registerResponse.body.status} setValue={onChangeTextStatus} />
-                        <TextInput style={styles.input} label="Quantidade em Estoque" value={registerResponse.body.quantidadeE} onChangeText={onChangeTextQuantidadeE}/>
+                        <TextInput style={styles.input} label="Nome" value={getResponse.body.nome} onChangeText={setNome} disabled={true}/>
+                        <DropDown style={styles.input} label="Tipo" list={tipoOpcoes} value={getResponse.body.tipo} setValue={setTipo} disabled={true}/>
+                        <DropDown style={styles.input} label="Status" list={statusOpcoes} value={getResponse.body.status} setValue={onChangeTextStatus} />
+                        <TextInput style={styles.input} label="Quantidade em Estoque" value={getResponse.body.quantidadeE} onChangeText={onChangeTextQuantidadeE}/>
 
                         <View style = {styles.sub}>
                             <Caption  style = {styles.title} >Localizaçao</Caption >
                         </View>
 
-                        <TextInput style={styles.input} label="Localizaçao atual" value={registerResponse.body.local} onChangeText={onChangeTextLocal}/>
-                        <DropDown style={styles.input} label="Movimentação" list={movimentacaoOpcoes} value={registerResponse.body.movimentacao} setValue={onChangeTextMovimentacao} />
+                        <TextInput style={styles.input} label="Localizaçao atual" value={getResponse.body.local} onChangeText={onChangeTextLocal}/>
+                        <DropDown style={styles.input} label="Movimentação" list={movimentacaoOpcoes} value={getResponse.body.movimentacao} setValue={onChangeTextMovimentacao} />
 
-                        {registerResponse.body.movimentacao == "SIM" ? (
+                        {getResponse.body.movimentacao == "SIM" ? (
                             <>
-                                <TextInput style={styles.input} label="Destino" value={registerResponse.body.destino} onChangeText={onChangeTextDestino}/>
-                                <TextInput style={styles.input} label="Quantidade Movimentada" value={registerResponse.body.quantidadeM} onChangeText={onChangeTextQuantidadeM}/>
+                                <TextInput style={styles.input} label="Destino" value={getResponse.body.destino} onChangeText={onChangeTextDestino}/>
+                                <TextInput style={styles.input} label="Quantidade Movimentada" value={getResponse.body.quantidadeM} onChangeText={onChangeTextQuantidadeM}/>
                             </>
                         ) : (
                             <></>
@@ -200,19 +215,31 @@ export default function Informacoes(props) {
                         
                     </View>
 
-                    <TextInput style={styles.input} label="Observações" value={registerResponse.body.observacao} onChangeText={onChangeTextObservacoes}/>
+                    <TextInput style={styles.input} label="Observações" value={getResponse.body.observacao} onChangeText={onChangeTextObservacoes}/>
 
                     <View style = {styles.buttons}>
-                        <Button mode="outlined" onPress={() => navigation.navigate('Consulta', route)}> Voltar </Button>
-                        <Button mode="contained" onPress={atualiza}  loading={atualizaResponse.running}> Salvar </Button>
-                        <Button mode="outlined" onPress={() => navigation.navigate('Consulta', route)}> Apagar </Button>
+                        <Button mode="outlined" onPress={() => navigation.navigate('Consulta', route)} disabled={getResponse.running || removeResponse.running || atualizaResponse.running} > Voltar </Button>
+                        <Button mode="contained" onPress={atualiza}  loading={atualizaResponse.running} disabled={getResponse.running || removeResponse.running || atualizaResponse.running}> Salvar </Button>
+                        <Button mode="outlined" onPress={() => setRemoveVisible(true)} loading={removeResponse.running} disabled={getResponse.running || removeResponse.running || atualizaResponse.running} > Apagar </Button>
                     </View>
 
 
-                    {!registerResponse.running && !registerResponse.success && (
-                    <Snackbar visible={registerError} action={{ label: 'Ok', onPress: () => setRegisterError(false) }} onDismiss={() => { }}>
-                        {registerResponse.body.status === 0 ? 'Não foi possível conectar ao servidor' : `ERROR ${registerResponse.body.status}: ${registerResponse.body.message}`}
+                    {!getResponse.running && !getResponse.success && (
+                    <Snackbar visible={getError} action={{ label: 'Ok', onPress: () => setGetError(false) }} onDismiss={() => { }}>
+                        {getResponse.body.status === 0 ? 'Não foi possível conectar ao servidor' : `ERROR ${getResponse.body.status}: ${getResponse.body.message}`}
                     </Snackbar>
+                    )}
+
+                    {!atualizaResponse.running && !atualizaResponse.success && (
+                        <Snackbar visible={registerError} action={{ label: 'Ok', onPress: () => setRegisterError(false) }} onDismiss={() => null}>
+                            {atualizaResponse.body.status === 0 ? 'Não foi possível conectar ao servidor' : `ERROR ${atualizaResponse.body.status}: ${atualizaResponse.body.message}`}
+                        </Snackbar>
+                    )}
+
+                    {!removeResponse.running && !removeResponse.success && (
+                        <Snackbar visible={removeError} action={{ label: 'Ok', onPress: () => setRemoveError(false) }} onDismiss={() => null}>
+                            {removeResponse.body.status === 0 ? 'Não foi possível conectar ao servidor' : `ERROR ${removeResponse.body.status}: ${removeResponse.body.message}`}
+                        </Snackbar>
                     )}
 
                 </SafeAreaView>
