@@ -15,9 +15,6 @@ export default function Consulta(props) {
     const { navigation, route } = props;
 
     const [id, setId] = useGlobal('id');
-
-    const [inputId, setInputId] = useState('');
-
     const [data, setData] = useGlobal('data');
     const [error, setError] = useState(false);
 
@@ -34,8 +31,6 @@ export default function Consulta(props) {
     }
 
     function visualizar(){
-        
-        setId(inputId);
         navigation.navigate('Informações', route);
     }
 
@@ -74,7 +69,7 @@ export default function Consulta(props) {
             </View>
 
             <Card style = {styles.card}>
-                <TextInput  style={styles.input} label = "Digite ID" value={inputId} onChangeText={setInputId}></TextInput>
+                <TextInput  style={styles.input} label = "Digite ID" value={id} onChangeText={setId}></TextInput>
             </Card>
   
             <View style = {styles.buttons}>
