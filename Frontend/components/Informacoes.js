@@ -4,7 +4,7 @@ import { View , ScrollView } from 'react-native';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { Text, TextInput ,  Button , Caption , Snackbar, ActivityIndicator} from 'react-native-paper';
+import { Text, TextInput ,  Button , Caption , Snackbar, Portal, Dialog, Paragraph, ActivityIndicator} from 'react-native-paper';
 
 import { DropDown, DateTimePicker, useRequest , useEmit, useGlobal , useEffect} from '../lib';
 
@@ -34,8 +34,7 @@ export default function Informacoes(props) {
     const [observacao, setObservacao] = useState('');
 
     const [getError, setGetError] = useState(false);
-    const [registerError, setRegisterError] = useState(false);  // Erro ao tentar atualizar ou postar algo
-
+    const [registerError, setRegisterError] = useState(false); 
     const [removeError, setRemoveError] = useState(false);
     const [removeVisible, setRemoveVisible] = useState(false);
 
@@ -121,7 +120,7 @@ export default function Informacoes(props) {
     function onConfirmRemove() {
         onDismissRemove();
         setRemoveError(true);
-        del(`/gato?key=${gato.key}`);
+        del(`/produto?id=${id}`);
     }
 
     useEffect(()=>{
@@ -157,6 +156,7 @@ export default function Informacoes(props) {
                     </View>
         ):(    
         
+            <>
             <ScrollView>
                 <SafeAreaView  style={styles.container}>
                     <View>
@@ -223,28 +223,52 @@ export default function Informacoes(props) {
                         <Button mode="outlined" onPress={() => setRemoveVisible(true)} loading={removeResponse.running} disabled={getResponse.running || removeResponse.running || atualizaResponse.running} > Apagar </Button>
                     </View>
 
-
-                    {!getResponse.running && !getResponse.success && (
-                    <Snackbar visible={getError} action={{ label: 'Ok', onPress: () => setGetError(false) }} onDismiss={() => { }}>
-                        {getResponse.body.status === 0 ? 'Não foi possível conectar ao servidor' : `ERROR ${getResponse.body.status}: ${getResponse.body.message}`}
-                    </Snackbar>
-                    )}
-
-                    {!atualizaResponse.running && !atualizaResponse.success && (
-                        <Snackbar visible={registerError} action={{ label: 'Ok', onPress: () => setRegisterError(false) }} onDismiss={() => null}>
-                            {atualizaResponse.body.status === 0 ? 'Não foi possível conectar ao servidor' : `ERROR ${atualizaResponse.body.status}: ${atualizaResponse.body.message}`}
-                        </Snackbar>
-                    )}
-
-                    {!removeResponse.running && !removeResponse.success && (
-                        <Snackbar visible={removeError} action={{ label: 'Ok', onPress: () => setRemoveError(false) }} onDismiss={() => null}>
-                            {removeResponse.body.status === 0 ? 'Não foi possível conectar ao servidor' : `ERROR ${removeResponse.body.status}: ${removeResponse.body.message}`}
-                        </Snackbar>
-                    )}
-
                 </SafeAreaView>
             </ScrollView>
-            )
+
+            {!getResponse.running && !getResponse.success && (
+            <Snackbar visible={getError} action={{ label: 'Ok', onPress: () => setGetError(false) }} onDismiss={() => { }}>
+                {getResponse.body.status === 0 ? 'Não foi possível conectar ao servidor' : `ERROR ${getResponse.body.status}: ${getResponse.body.message}`}
+            </Snackbar>
+            )}
+
+            {!atualizaResponse.running && !atualizaResponse.success && (
+                <Snackbar visible={registerError} action={{ label: 'Ok', onPress: () => setRegisterError(false) }} onDismiss={() => null}>
+                    {atualizaResponse.body.status === 0 ? 'Não foi possível conectar ao servidor' : `ERROR ${atualizaResponse.body.status}: ${atualizaResponse.body.message}`}
+                </Snackbar>
+            )}
+
+            {!removeResponse.running && !removeResponse.success && (
+                <Snackbar visible={removeError} action={{ label: 'Ok', onPress: () => setRemoveError(false) }} onDismiss={() => null}>
+                    {removeResponse.body.status === 0 ? 'Não foi possível conectar ao servidor' : `ERROR ${removeResponse.body.status}: ${removeResponse.body.message}`}
+                </Snackbar>
+            )}
+
+            <Portal>
+                <Dialog visible={removeVisible} onDismiss={onDismissRemove}>
+                    <View>
+                        <Dialog.Title>
+                            {`Remover ${getResponse.body.id}?`}
+                        </Dialog.Title>
+                        <Dialog.Content>
+                            <Paragraph>
+                                Esta operação não pode ser desfeita.
+                            </Paragraph>
+                        </Dialog.Content>
+                        <Dialog.Actions>
+                            <Button onPress={onDismissRemove}>
+                                Cancelar
+                            </Button>
+                            <Button onPress={onConfirmRemove}>
+                                Ok
+                            </Button>
+                        </Dialog.Actions>
+                    </View>
+                </Dialog>
+            </Portal>
+
+            </>)
+
         ):(
             <View style={styles.center}>
                 <Button mode="contained" onPress={emit}>
