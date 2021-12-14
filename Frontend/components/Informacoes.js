@@ -56,6 +56,32 @@ export default function Informacoes(props) {
     const { get ,  response: registerResponse , skip} = useRequest(settings.url);
     const {put, response: atualizaResponse} = useRequest(settings.url);
 
+
+    function onChangeTextUsuario(novoUsuario){
+        skip({ ...registerResponse.body, usuario: novoUsuario})
+    }
+    function onChangeTextQuantidadeE(novaQuantidade){
+        skip({ ...registerResponse.body, quantidadeE: novaQuantidade})
+    }
+    function onChangeTextStatus(novoStatus){
+        skip({ ...registerResponse.body, status: novoStatus})
+    }
+    function onChangeTextLocal(novoLocal){
+        skip({ ...registerResponse.body, local: novoLocal})
+    }
+    function onChangeTextMovimentacao(novaMovimentacao){
+        skip({ ...registerResponse.body, movimentacao: novaMovimentacao})
+    }
+    function onChangeTextDestino(novoDestino){
+        skip({ ...registerResponse.body, destino: novoDestino})
+    }
+    function onChangeTextQuantidadeM(novaQuantidadeM){
+        skip({ ...registerResponse.body, quantidadeM: novaQuantidadeM})
+    }
+    function onChangeTextObservacoes(novaObservacao){
+        skip({ ...registerResponse.body, observacao: novaObservacao})
+    }
+    
     function atualiza() {
         
         setRegisterError(true);
@@ -123,8 +149,8 @@ export default function Informacoes(props) {
                             <Caption  style = {styles.geral}>Geral</Caption >
                         </View>    
 
-                        <TextInput style={styles.input} label="ID" value={id} onChangeText={setId}/>
-                        <TextInput style={styles.input} label="Usuario" value={registerResponse.body.usuario} onChangeText={(novoUsuario) => {skip({ ...registerResponse.body, usuario: novoUsuario})}}/>
+                        <TextInput style={styles.input} label="ID" value={id} onChangeText={setId} disabled={true}/>
+                        <TextInput style={styles.input} label="Usuario" value={registerResponse.body.usuario} onChangeText={onChangeTextUsuario}/>
 
                         <View style={styles.tempo}>
                             <DateTimePicker type="date" style={styles.inputDate} label="Data" value={dateScan} setValue={setDate} disabled={true}/>
@@ -151,22 +177,22 @@ export default function Informacoes(props) {
                             <Caption  style = {styles.title} >Informacoes sobre o item</Caption >
                         </View>
 
-                        <TextInput style={styles.input} label="Nome" value={registerResponse.body.nome} onChangeText={setNome}/>
-                        <DropDown style={styles.input} label="Tipo" list={tipoOpcoes} value={registerResponse.body.tipo} setValue={setTipo} />
-                        <TextInput style={styles.input} label="Quantidade em Estoque" value={registerResponse.body.quantidadeE} onChangeText={(novaQuantidadeE) => {skip({ ...registerResponse.body, quantidadeE: novaQuantidadeE})}}/>
-                        <DropDown style={styles.input} label="Status" list={statusOpcoes} value={registerResponse.body.status} setValue={(novoStatus) => {skip({ ...registerResponse.body, status: novoStatus})}} />
+                        <TextInput style={styles.input} label="Nome" value={registerResponse.body.nome} onChangeText={setNome} disabled={true}/>
+                        <DropDown style={styles.input} label="Tipo" list={tipoOpcoes} value={registerResponse.body.tipo} setValue={setTipo} disabled={true}/>
+                        <DropDown style={styles.input} label="Status" list={statusOpcoes} value={registerResponse.body.status} setValue={onChangeTextStatus} />
+                        <TextInput style={styles.input} label="Quantidade em Estoque" value={registerResponse.body.quantidadeE} onChangeText={onChangeTextQuantidadeE}/>
 
                         <View style = {styles.sub}>
                             <Caption  style = {styles.title} >Localizaçao</Caption >
                         </View>
 
-                        <TextInput style={styles.input} label="Localizaçao atual" value={registerResponse.body.local} onChangeText={(novoLocal) => {skip({ ...registerResponse.body, local: novoLocal})}}/>
-                        <DropDown style={styles.input} label="Movimentação" list={movimentacaoOpcoes} value={registerResponse.body.movimentacao} setValue={(novaMovimentacao) => {skip({ ...registerResponse.body, movimentacao: novaMovimentacao})}} />
+                        <TextInput style={styles.input} label="Localizaçao atual" value={registerResponse.body.local} onChangeText={onChangeTextLocal}/>
+                        <DropDown style={styles.input} label="Movimentação" list={movimentacaoOpcoes} value={registerResponse.body.movimentacao} setValue={onChangeTextMovimentacao} />
 
-                        {movimentacao == "SIM" ? (
+                        {registerResponse.body.movimentacao == "SIM" ? (
                             <>
-                                <TextInput style={styles.input} label="Destino" value={registerResponse.body.destino} onChangeText={(novoDestino) => {skip({ ...registerResponse.body, destino: novoDestino})}}/>
-                                <TextInput style={styles.input} label="Quantidade Movimentada" value={registerResponse.body.quantidadeM} onChangeText={(novaQuantidade) => {skip({ ...registerResponse.body, quantidadeM: novaQuantidade})}}/>
+                                <TextInput style={styles.input} label="Destino" value={registerResponse.body.destino} onChangeText={onChangeTextDestino}/>
+                                <TextInput style={styles.input} label="Quantidade Movimentada" value={registerResponse.body.quantidadeM} onChangeText={onChangeTextQuantidadeM}/>
                             </>
                         ) : (
                             <></>
@@ -174,11 +200,12 @@ export default function Informacoes(props) {
                         
                     </View>
 
-                    <TextInput style={styles.input} label="Observações" value={registerResponse.body.observacao} onChangeText={(novaObs) => {skip({ ...registerResponse.body, observacao: novaObs})}}/>
+                    <TextInput style={styles.input} label="Observações" value={registerResponse.body.observacao} onChangeText={onChangeTextObservacoes}/>
 
                     <View style = {styles.buttons}>
+                        <Button mode="outlined" onPress={() => navigation.navigate('Consulta', route)}> Voltar </Button>
                         <Button mode="contained" onPress={atualiza}  loading={atualizaResponse.running}> Salvar </Button>
-                        <Button mode="outlined" onPress={() => navigation.navigate('Histórico', route)}> Historico </Button>
+                        <Button mode="outlined" onPress={() => navigation.navigate('Consulta', route)}> Apagar </Button>
                     </View>
 
 
