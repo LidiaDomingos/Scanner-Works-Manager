@@ -33,6 +33,12 @@ export default function Informacoes(props) {
     const [destino, setDestino] = useState('');
     const [observacao, setObservacao] = useState('');
 
+    const [usuarioError,setUsuarioError] = useState(false);
+    const [localError,setLocalError] = useState(false);
+    const [quantidadeEError,setQuantidadeEError] = useState(false);
+    const [quantidadeMError,setQuantidadeMError] = useState(true);
+    const [destinoError,setDestinoError] = useState(true);
+
     const [getError, setGetError] = useState(false);
     const [registerError, setRegisterError] = useState(false); 
     const [removeError, setRemoveError] = useState(false);
@@ -62,30 +68,80 @@ export default function Informacoes(props) {
     const { del, response: removeResponse } = useRequest(settings.url);
 
     function onChangeTextUsuario(novoUsuario){
-        skip({ ...getResponse.body, usuario: novoUsuario})
+        skip({ ...getResponse.body, usuario: novoUsuario});
+        helpTextUsuario(novoUsuario);
     }
     function onChangeTextQuantidadeE(novaQuantidade){
         skip({ ...getResponse.body, quantidadeE: novaQuantidade})
+        helpTextQuantidadeE(novaQuantidade);
     }
     function onChangeTextStatus(novoStatus){
         skip({ ...getResponse.body, status: novoStatus})
     }
     function onChangeTextLocal(novoLocal){
         skip({ ...getResponse.body, local: novoLocal})
+        helpTextLocal(novoLocal);
     }
     function onChangeTextMovimentacao(novaMovimentacao){
+        emit();
         skip({ ...getResponse.body, movimentacao: novaMovimentacao})
     }
     function onChangeTextDestino(novoDestino){
-        skip({ ...getResponse.body, destino: novoDestino})
+        skip({ ...getResponse.body, destino: novoDestino});
+        helpTextDestino(novoDestino);
     }
     function onChangeTextQuantidadeM(novaQuantidadeM){
-        skip({ ...getResponse.body, quantidadeM: novaQuantidadeM})
+        skip({ ...getResponse.body, quantidadeM: novaQuantidadeM});
+        helpTextQuantidadeM(novaQuantidadeM);
     }
     function onChangeTextObservacoes(novaObservacao){
         skip({ ...getResponse.body, observacao: novaObservacao})
     }
+
+    function Invalid(input) {
+        return !input.trim();
+    }
+
+    function helpTextUsuario(inputUsuario){
+        if(typeof inputUsuario !== 'string' || Invalid(inputUsuario)){
+            setUsuarioError(true);
+        }else{
+            setUsuarioError(false);
+        }
+    }
     
+    function helpTextLocal(inputLocal){
+        if(typeof inputLocal !== 'string' || Invalid(inputLocal)){
+            setLocalError(true);
+        }else{
+            setLocalError(false);
+        }
+    }
+
+    function helpTextQuantidadeE(inputE){
+        if(!isFinite(inputE) || Invalid(inputE)){
+            setQuantidadeEError(true);
+        }else{
+            setQuantidadeEError(false);
+        }
+    }
+   
+    function helpTextQuantidadeM(inputM){
+        if(!isFinite(inputM) || Invalid(inputM)){
+            setQuantidadeMError(true);
+        }else{
+            setQuantidadeMError(false);
+        }
+    }
+
+    function helpTextDestino(inputDestino){
+        if(typeof inputDestino !== 'string' || Invalid(inputDestino)){
+            setDestinoError(true);
+        }else{
+            setDestinoError(false);
+        }
+    }
+
     function atualiza() {
         
         setRegisterError(true);
@@ -170,7 +226,11 @@ export default function Informacoes(props) {
 
                         <TextInput style={styles.input} label="ID" value={id} onChangeText={setId} disabled={true}/>
                         <TextInput style={styles.input} label="Usuario" value={getResponse.body.usuario} onChangeText={onChangeTextUsuario}/>
-
+                        { usuarioError && (
+                            <HelperText style={styles.error} type="error">
+                                Usuario é obrigatório.
+                            </HelperText>
+                        )}
                         <View style={styles.tempo}>
                             <DateTimePicker type="date" style={styles.inputDate} label="Data" value={dateScan} setValue={setDate} disabled={true}/>
                             <DateTimePicker type="time" style={styles.inputTime} label="Hora" value={timeScan} setValue={setNowTime} disabled={true}/>
@@ -200,18 +260,41 @@ export default function Informacoes(props) {
                         <DropDown style={styles.input} label="Tipo" list={tipoOpcoes} value={getResponse.body.tipo} setValue={setTipo} disabled={true}/>
                         <DropDown style={styles.input} label="Status" list={statusOpcoes} value={getResponse.body.status} setValue={onChangeTextStatus} />
                         <TextInput style={styles.input} label="Quantidade em Estoque" value={getResponse.body.quantidadeE} onChangeText={onChangeTextQuantidadeE}/>
+                        { quantidadeEError && (
+                            <HelperText style={styles.error} type="error">
+                                Quantidade em Estoque é obrigatório. Valor numérico.
+                            </HelperText>
+                        )}
 
                         <View style = {styles.sub}>
                             <Caption  style = {styles.title} >Localizaçao</Caption >
                         </View>
 
                         <TextInput style={styles.input} label="Localizaçao atual" value={getResponse.body.local} onChangeText={onChangeTextLocal}/>
+                        { localError && (
+                            <HelperText style={styles.error} type="error">
+                                Local é obrigatório.
+                            </HelperText>
+                        )}
+
                         <DropDown style={styles.input} label="Movimentação" list={movimentacaoOpcoes} value={getResponse.body.movimentacao} setValue={onChangeTextMovimentacao} />
 
                         {getResponse.body.movimentacao == "SIM" ? (
                             <>
                                 <TextInput style={styles.input} label="Destino" value={getResponse.body.destino} onChangeText={onChangeTextDestino}/>
+                                { destinoError && (
+                                    <HelperText style={styles.error} type="error">
+                                        Destino é obrigatório.
+                                    </HelperText>
+                                )}
+
                                 <TextInput style={styles.input} label="Quantidade Movimentada" value={getResponse.body.quantidadeM} onChangeText={onChangeTextQuantidadeM}/>
+                                { quantidadeMError && (
+                                    <HelperText style={styles.error} type="error">
+                                        Quantidade movimentada é obrigatório. Valor numérico.
+                                    </HelperText>
+                                )}
+
                             </>
                         ) : (
                             <></>
@@ -222,9 +305,9 @@ export default function Informacoes(props) {
                     <TextInput style={styles.input} label="Observações" value={getResponse.body.observacao} onChangeText={onChangeTextObservacoes}/>
 
                     <View style = {styles.buttons}>
-                        <Button mode="outlined" onPress={() => navigation.navigate('Consulta', route)} disabled={getResponse.running || removeResponse.running || atualizaResponse.running} > Voltar </Button>
-                        <Button mode="contained" onPress={atualiza}  loading={atualizaResponse.running} disabled={getResponse.running || removeResponse.running || atualizaResponse.running}> Salvar </Button>
-                        <Button mode="outlined" onPress={() => setRemoveVisible(true)} loading={removeResponse.running} disabled={getResponse.running || removeResponse.running || atualizaResponse.running} > Apagar </Button>
+                        <Button mode="outlined" onPress={() => navigation.navigate('Consulta', route)} disabled={destinoError || quantidadeMError || quantidadeEError || usuarioError || localError || getResponse.running || removeResponse.running || atualizaResponse.running} > Voltar </Button>
+                        <Button mode="contained" onPress={atualiza}  loading={atualizaResponse.running} disabled={destinoError || quantidadeMError || quantidadeEError || usuarioError || localError || getResponse.running || removeResponse.running || atualizaResponse.running}> Salvar </Button>
+                        <Button mode="outlined" onPress={() => setRemoveVisible(true)} loading={removeResponse.running} disabled={destinoError || quantidadeMError || quantidadeEError || usuarioError || localError || getResponse.running || removeResponse.running || atualizaResponse.running} > Apagar </Button>
                     </View>
 
                 </SafeAreaView>
