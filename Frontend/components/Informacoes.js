@@ -4,7 +4,7 @@ import { View , ScrollView } from 'react-native';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { Text, TextInput ,  Button , Caption , Snackbar, Portal, Dialog, Paragraph, ActivityIndicator} from 'react-native-paper';
+import { Text, TextInput ,  Button , Caption , Snackbar, Portal, Dialog, Paragraph, HelperText, ActivityIndicator} from 'react-native-paper';
 
 import { DropDown, DateTimePicker, useRequest , useEmit, useGlobal , useEffect} from '../lib';
 
@@ -108,6 +108,11 @@ export default function Informacoes(props) {
             observacao:getResponse.body.observacao
         }
 
+        if(body.movimentacao == 'NAO'){
+            body.destino = "";
+            body.quantidadeM = "";
+        }
+
         body.key = route.key;
         put('/produto',body);
 
@@ -137,7 +142,6 @@ export default function Informacoes(props) {
         }
 
     }, [atualizaResponse,removeResponse]) 
-
 
     return (
         

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { View } from 'react-native';
-import { Card , Paragraph, Caption, Portal, Text, Button, Snackbar, TextInput, IconButton} from 'react-native-paper';
+import { Card , Paragraph, Caption, Portal, Text, Button, Snackbar, TextInput, FAB, IconButton} from 'react-native-paper';
 
 import { useScanner } from '../lib';
 
@@ -49,8 +49,7 @@ export default function Consulta(props) {
                             {data}
                         </Text>
                     )}
-                    <Button style={styles.buttonScan} onPress={onPress} >
-                        <IconButton icon="camera" color={'#2D2A9B'}  />
+                    <Button style={styles.buttonScan} mode="outlined" onPress={onPress} >
                         Escanear
                     </Button>
                 </View>
@@ -71,7 +70,6 @@ export default function Consulta(props) {
             <Card style = {styles.card}>
                 <TextInput  style={styles.input} label = "Digite ID" value={id} onChangeText={setId}></TextInput>
             </Card>
-  
             <View style = {styles.buttons}>
                 <Button mode="contained" onPress={visualizar}> Visualizar </Button>
             </View>
