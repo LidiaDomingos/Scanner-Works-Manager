@@ -46,4 +46,15 @@ npm start
 
 2. Caso não seja o primeiro uso
 
+```bash
+
+cd Frontend
+
+npm start
+
+```
+
+Após o descrito, uma janela do seu navegador padrão abrirá com o Metro Bundler.
+No canto inferior esquerdo haverá um QRCode que pode ser scaneado pelo aplicativo do Expo Go previamente instalado em seu dispositivo móvel. Essa conexão poderá ser realizada via LAN (necessário está na mesma rede de wifi que seu dispositivo móvel) ou via TUNEL.
+
 
