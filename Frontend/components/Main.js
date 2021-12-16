@@ -9,48 +9,12 @@ import {createDrawerNavigator, DrawerContentScrollView, DrawerItemList} from '@r
 import Consulta from './Consulta'
 import Historico from './Historico'
 import Informacoes from './Informacoes'
+import Login from './Login'
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { DrawerCustomizado } from './DrawerCustomizado';
+
 const Drawer = createDrawerNavigator();
-
-const CustomDrawer = props => {
-  return (
-    <View style={{ flex: 1 }}>
-
-      <DrawerContentScrollView {...props}>
-        <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'center',
-              alignItems: 'center',
-              padding: 20,
-              marginBottom: 20,
-            }}
-        >
-          <Image
-              source={require('../assets/marca.png')}
-              style={{ width: 100, height: 30, flexDirection: 'row'}}
-          />
-        </View>
-      <DrawerItemList {...props} />
-
-      </DrawerContentScrollView>
-      <TouchableOpacity
-        style={{
-          position: 'absolute',
-          right: 0,
-          left: 0,
-          bottom: 50,
-          padding: 20,
-          backgroundColor: '#f6f6f6',
-          flexDirection: 'row',
-          justifyContent: 'center'
-        }}> 
-       <Text>Log Out</Text>
-      </TouchableOpacity>
-    </View>
-  );
-};
 
 export default function Main(props) {
    
@@ -110,9 +74,10 @@ export default function Main(props) {
     return (
        
           <Drawer.Navigator initialRouteName="Consulta"  
-            drawerContent={props => <CustomDrawer {...props}/>}
+            drawerContent={props => <DrawerCustomizado {...props}/>}
             screenOptions={screenOptions}>
 
+              <Drawer.Screen name="Login" component= {Login} options={{headerShow:false}}/>
               <Drawer.Screen name="Informações" component= {Informacoes} options={{drawerItemStyle: { display: 'none' }}}/>
               <Drawer.Screen name="Consulta" component= {Consulta} />
               <Drawer.Screen name="Histórico" component= {Historico} />
