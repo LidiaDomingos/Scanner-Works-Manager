@@ -23,10 +23,10 @@ function ProductRow(props){
     
     const {navigation, produto} = props;
 
-    let data = new Date(produto.dateScan);
+    let data = new Date(produto.lastDate);
     let dataFormatada = ((data.getDate() )) + "/" + ((data.getMonth() + 1)) + "/" + data.getFullYear(); 
 
-    let today = new Date(produto.timeScan);                                   
+    let today = new Date(produto.lastTime);                                   
     let time = today.getHours() + ":" + today.getMinutes();
 
     return (
@@ -97,6 +97,7 @@ export default function Historico(props) {
                                         page={1}
                                         numberOfPages={3}
                                         label="1-2 of 6"
+                                        onPageChange={() => console.log("Sem páginas para passar.")}
                                         optionsLabel={'Rows per page'}
                                     />
                                     </DataTable>
