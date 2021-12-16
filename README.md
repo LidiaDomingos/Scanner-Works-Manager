@@ -85,12 +85,7 @@ No canto inferior esquerdo haverá um QRCode que pode ser scaneado pelo aplicati
 -Copiar o valor do link obtido anteriormente e colar na chave "url" presente na pasta Frontend/settings.json. 
 (Caso haja um link no local o mesmo deve ser apagado e esse colado no lugar)
 
-
-Tendo feito os procedimentos descritos, é preciso ir na aba chamada Projecs disponível na parte inferior esquerda da interface do Expo e clicar no Scan QR Code, e assim scanear o QR Code que será disponibilizado, conforme exemplifica imagem abaixo, sendo interfaces parecidas tanto para Android quanto iOS: 
-
-<div align = "center">
-<img src="ExpoGoReadme.jpeg" width = 150 height = 600 align=”middle”>
-</div>
+Tendo feito os procedimentos descritos, é preciso ir na aba chamada Projecs disponível na parte inferior esquerda da interface do Expo ,em seu dispositivo móvel, e clicar no Scan QR Code, e assim scanear o QR Code que foi disponibilizado pela janela do Metro Bundle em seu navegador, como descrito antes.
 
 -Agora o aplicativo deve está funcional ! Entre no aplcativo Expo Go em seu dispositivo móvel scanei o QRCode como descrito e mãos a obra!
 
