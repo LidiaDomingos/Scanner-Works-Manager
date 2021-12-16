@@ -10,6 +10,7 @@ import styles from '../styles/Historico.json';
 
 import { useSignal, useEmit, useEffect, useRequest, useGlobal, map } from '../lib';
 import settings from '../settings.json';
+import { EventEmitter } from '@unimodules/react-native-adapter';
 
 function ProductRow(props){
 

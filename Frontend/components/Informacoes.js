@@ -6,7 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { Text, TextInput ,  Button , Caption , Snackbar, Portal, Dialog, Paragraph, HelperText, ActivityIndicator} from 'react-native-paper';
 
-import { DropDown, DateTimePicker, useRequest , useEmit, useGlobal , useEffect} from '../lib';
+import { DropDown, DateTimePicker, useRequest , useEmit, useGlobal , useSignal, useEffect} from '../lib';
 
 import styles from '../styles/Informacoes.json';
 import settings from '../settings.json';
@@ -36,8 +36,8 @@ export default function Informacoes(props) {
     const [usuarioError,setUsuarioError] = useState(false);
     const [localError,setLocalError] = useState(false);
     const [quantidadeEError,setQuantidadeEError] = useState(false);
-    const [quantidadeMError,setQuantidadeMError] = useState(true);
-    const [destinoError,setDestinoError] = useState(true);
+    const [quantidadeMError,setQuantidadeMError] = useState(false);
+    const [destinoError,setDestinoError] = useState(false);
 
     const [getError, setGetError] = useState(false);
     const [registerError, setRegisterError] = useState(false); 
@@ -60,6 +60,7 @@ export default function Informacoes(props) {
         {label: 'Ferramenta' , value: 'FERRAMENTA'}
     ]
 
+    const signal = useSignal('updated-product');
     const emit = useEmit('get-id');
     const emitAtualiza = useEmit('updated-product');
 
@@ -152,8 +153,8 @@ export default function Informacoes(props) {
             usuario:getResponse.body.usuario,
             dateScan:dateScan,
             timeScan:timeScan,
-            lastDate:lastDate,
-            lastTime:lastTime,
+            lastDate:dateScan,
+            lastTime:timeScan,
             nome:nome,
             tipo:tipo,
             quantidadeE:getResponse.body.quantidadeE,
@@ -186,8 +187,12 @@ export default function Informacoes(props) {
 
     useEffect(()=>{
         setGetError(true);
+
+        setDate(new Date());
+        setNowTime(new Date());
+
         get('/produto?id='+id);
-    }, [id]) 
+    }, [id, signal]) 
 
     useEffect(()=>{
         setRegisterError(true);
