@@ -20,7 +20,7 @@ export default {
     },
     screenOptions: {
         headerStyle: {
-            backgroundColor: '#2D2A9B',
+            backgroundImage: "linear-gradient(to right, #2D2A98, #18EEAB)"
         },
         headerTintColor: '#ffffff',
         headerTitleStyle: {

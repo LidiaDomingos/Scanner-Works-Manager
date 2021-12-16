@@ -77,7 +77,7 @@ export default function Main(props) {
             drawerContent={props => <DrawerCustomizado {...props}/>}
             screenOptions={screenOptions}>
 
-              <Drawer.Screen name="Login" component= {Login} options={{headerShow:false}}/>
+              <Drawer.Screen name="Login" component= {Login} options={{headerShown: false}}/>
               <Drawer.Screen name="Informações" component= {Informacoes} options={{drawerItemStyle: { display: 'none' }}}/>
               <Drawer.Screen name="Consulta" component= {Consulta} />
               <Drawer.Screen name="Histórico" component= {Historico} />
