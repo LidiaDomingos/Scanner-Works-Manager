@@ -2,7 +2,7 @@ import React from 'react';
 
 import { View, StyleSheet , Image } from 'react-native';
 
-import {Avatar,Title,Caption,Drawer} from 'react-native-paper';
+import {Avatar,Title,Caption,Drawer, Divider} from 'react-native-paper';
 
 import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 
@@ -26,7 +26,7 @@ export function DrawerCustomizado(props) {
                         </View>
                     </View>
                 </View>
-                    
+                <Divider/>
                 <DrawerItem  icon={({color, size}) => (<Icon name="barcode-scan" color={color} size={size}/>)} label="Consulta" onPress={() => {props.navigation.navigate('Consulta')}}/>
                 <DrawerItem icon={({color, size}) => (<Icon name="chart-areaspline" color={color} size={size}/>)} label="Hitorico de Produtos" onPress={() => {props.navigation.navigate('Histórico')}}/>
             </View>
@@ -61,7 +61,10 @@ const styles = StyleSheet.create({
       flex: 1,
     },
     userInfoSection: {
-      paddingLeft: 20,
+        flex:1,
+        justifyContent:'center',
+        alignItems:'center',
+        marginBottom:'1.5rem'
     },
     icon:{
     marginTop:'1.5rem',
