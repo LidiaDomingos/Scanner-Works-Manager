@@ -64,26 +64,25 @@ No canto inferior esquerdo haverá um QRCode que pode ser scaneado pelo aplicati
 
 1. Inicializando banco de dados
 
-- Abrir na IDE Eclipse (ou outra semelhante e previamente configurada) a pasta Backend contida no repositorio clonado.
+-Abrir na IDE Eclipse (ou outra semelhante e previamente configurada) a pasta Backend contida no repositorio clonado.
 
-- Rodar a pasta Backend/src.
+-Rodar a pasta Backend/src.
 
-- Pegar o link obtido no console
+-Pegar o link obtido no console
 
 2. Conexão Frontend-Backend
 
-- Copiar o valor do link obtido anteriormente e colar na chave "url" presente na pasta Frontend/settings.json. 
+-Copiar o valor do link obtido anteriormente e colar na chave "url" presente na pasta Frontend/settings.json. 
 (Caso haja um link no local o mesmo deve ser apagado e esse colado no lugar)
 
-- Agora o aplicativo deve está funcional ! Entre no aplcativo Expo Go em seu dispositivo móvel scanei o QRCode descrito anterioremente na janela aberta em seu navegador pelo Metro Bundler e mãos a obra!
+-Agora o aplicativo deve está funcional ! Entre no aplcativo Expo Go em seu dispositivo móvel scanei o QRCode descrito anterioremente na janela aberta em seu navegador pelo Metro Bundler e mãos a obra!
 
 ## Alguns fluxos possíveis de serem realizados
 
 - Scaneando o QRCode e realizando alguma alteração no produto Scaneado: (Colocar link)
 - Verificando mais iformações de algum produto no histórico: (Colocar link)
 
-
-<div style="text-align:center"><img src="Frontend/assets/readmeLogo.PNG" width=150 style="float: center; margin: 0px 0px 10px 10px"></div>
+<p align="center"><img src="Frontend/assets/readmeLogo.PNG" width=150 style="float: center; margin: 0px 0px 10px 10px"></p>
 
 @2021, Insper, Terceiro Semestre, Engenharia da Computação.
 
