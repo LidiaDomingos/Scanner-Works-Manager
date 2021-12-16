@@ -31,7 +31,7 @@ equipamentos e sistemas construtivos, possibilitando também a visualização de
 
 *Para o funcionamento do programa basta realizar o clone do repositório em um terminal, entrar na pasta do repositorio abrir o terminal e realizar o descrito a seguir*
 
-- Funcionamento Interface (Frontend):
+**Funcionamento Interface (Frontend):**
 
 1.  Caso seja o primeiro uso:
 
@@ -83,7 +83,7 @@ No canto inferior esquerdo haverá um QRCode que pode ser scaneado pelo aplicati
 - Verificando mais iformações de algum produto no histórico: (Colocar link)
 
 
-<center><img src="assets/marca.png" width=50 style="float: center; margin: 0px 0px 10px 10px"></center>
+<center><img src="Frontend/assets/marca.png" width=100 style="float: center; margin: 0px 0px 10px 10px"></center>
 
 @2021, Insper, Terceiro Semestre, Engenharia da Computação.
 
