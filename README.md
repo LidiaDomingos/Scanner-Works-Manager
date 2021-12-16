@@ -3,8 +3,10 @@
 ## Descrição do Projeto - Proposta 4
 
 Aplicativo desenvolvido na disciplina de Desenvolvimento Colaborativo Ágil no 3°Semestre de Engenharia da Computação em parceiria com a empresa ConnectData.  
-O programa desenvolvido permite gestão de modificações e manutenção em peças, 
-equipamentos e sistemas construtivos, possibilitando também a visualização de um hitórico de modificações realizadas. 
+
+O aplicativo produzido tem como objetivo monitorar a situação de materiais de forma otimizada, ou seja, ter uma gestão de modificações e manutenção de peças, equipamentos e sistemas construtivos nos locais de construções civis.
+
+Esse monitoramento é feito por meio do uso de identificadores únicos que trazem do banco de dados as informações do material, sendo possível alterar alguns dados, como a quantidade e afins, caso seja necessário. Tal identificação pode ser feita com a leitura do QR Code disponível nos objetos que devem ser monitorados. Além disso, é também feito o uso de um registro de histórico para melhor visualização da movimentação que está ocorrendo no local da obra.
  
 ## Integrantes:
 
@@ -26,6 +28,13 @@ equipamentos e sistemas construtivos, possibilitando também a visualização de
 
 > pip install npm
 > Instalar aplicativo Expo Go. 
+
+Para instalar Expo Go:
+
+<div align="center">
+<p> <a href = "https://play.google.com/store/apps/details?id=host.exp.exponent"> Expo Go na Play Store </a> </p>
+<p> <a href = "https://apps.apple.com/br/app/expo-go/id982107779"> Expo Go na Apple Store </a> </p>
+</div>
 
 ## :warning: Para execução correta do programa siga o tutorial abaixo: :warning:
 
@@ -75,7 +84,15 @@ No canto inferior esquerdo haverá um QRCode que pode ser scaneado pelo aplicati
 -Copiar o valor do link obtido anteriormente e colar na chave "url" presente na pasta Frontend/settings.json. 
 (Caso haja um link no local o mesmo deve ser apagado e esse colado no lugar)
 
--Agora o aplicativo deve está funcional ! Entre no aplcativo Expo Go em seu dispositivo móvel scanei o QRCode descrito anterioremente na janela aberta em seu navegador pelo Metro Bundler e mãos a obra!
+
+Tendo feito os procedimentos descritos, é preciso ir na aba chamada Projecs disponível na parte inferior esquerda da interface do Expo e clicar no Scan QR Code, e assim scanear o QR Code que será disponibilizado, conforme exemplifica imagem abaixo, sendo interfaces parecidas tanto para Android quanto iOS: 
+
+<div align = "center">
+<img src="https://rationalappdev.com/wp-content/uploads/2017/06/Expo-2.jpg" width = 150 height = 600 align=”middle”>
+</div>
+
+-Agora o aplicativo deve está funcional ! Entre no aplcativo Expo Go em seu dispositivo móvel scanei o QRCode como descrito e mãos a obra!
+
 
 ## Alguns fluxos possíveis de serem realizados
 
