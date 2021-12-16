@@ -31,7 +31,7 @@ equipamentos e sistemas construtivos, possibilitando também a visualização de
 
 *Para o funcionamento do programa basta realizar o clone do repositório em um terminal, entrar na pasta do repositorio abrir o terminal e realizar o descrito a seguir*
 
-**Funcionamento Interface (Frontend):**
+- **Funcionamento Interface (Frontend):**
 
 1.  Caso seja o primeiro uso:
 
@@ -60,15 +60,15 @@ No canto inferior esquerdo haverá um QRCode que pode ser scaneado pelo aplicati
 
 :warning: Antes de realizar essa conexão é necessário configurar o banco de dados :warning:
 
-**Configurando banco de dados e conexão com a interface**
+- **Configurando banco de dados e conexão com a interface**
 
 1. Inicializando banco de dados
 
--- Abrir na IDE Eclipse (ou outra semelhante e previamente configurada) a pasta Backend contida no repositorio clonado.
+- Abrir na IDE Eclipse (ou outra semelhante e previamente configurada) a pasta Backend contida no repositorio clonado.
 
--- Rodar a pasta Backend/src.
+- Rodar a pasta Backend/src.
 
--- Pegar o link obtido no console
+- Pegar o link obtido no console
 
 2. Conexão Frontend-Backend
 
@@ -83,7 +83,7 @@ No canto inferior esquerdo haverá um QRCode que pode ser scaneado pelo aplicati
 - Verificando mais iformações de algum produto no histórico: (Colocar link)
 
 
-<div style="text-align:center"><img src="Frontend/assets/readmeLogo.png" width=150 style="float: center; margin: 0px 0px 10px 10px"></div>
+<div style="text-align:center"><img src="Frontend/assets/readmeLogo.PNG" width=150 style="float: center; margin: 0px 0px 10px 10px"></div>
 
 @2021, Insper, Terceiro Semestre, Engenharia da Computação.
 
