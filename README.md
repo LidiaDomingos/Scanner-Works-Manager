@@ -60,7 +60,7 @@ No canto inferior esquerdo haverá um QRCode que pode ser scaneado pelo aplicati
 
 :warning: Antes de realizar essa conexão é necessário configurar o banco de dados :warning:
 
-- Configurando banco de dados e conexão com a interface
+**Configurando banco de dados e conexão com a interface**
 
 1. Inicializando banco de dados
 
@@ -83,7 +83,7 @@ No canto inferior esquerdo haverá um QRCode que pode ser scaneado pelo aplicati
 - Verificando mais iformações de algum produto no histórico: (Colocar link)
 
 
-<center><img src="Frontend/assets/marca.png" width=100 style="float: center; margin: 0px 0px 10px 10px"></center>
+<div style="text-align:center"><img src="Frontend/assets/marca.png" width=150 style="float: center; margin: 0px 0px 10px 10px"></div>
 
 @2021, Insper, Terceiro Semestre, Engenharia da Computação.
 
