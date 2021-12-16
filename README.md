@@ -27,6 +27,7 @@ Esse monitoramento é feito por meio do uso de identificadores únicos que traze
 *Para ter acesso completo as funcionalidades deste projeto, realizar:*
 
 > pip install npm
+
 > Instalar aplicativo Expo Go. 
 
 Para instalar Expo Go:
@@ -88,7 +89,7 @@ No canto inferior esquerdo haverá um QRCode que pode ser scaneado pelo aplicati
 Tendo feito os procedimentos descritos, é preciso ir na aba chamada Projecs disponível na parte inferior esquerda da interface do Expo e clicar no Scan QR Code, e assim scanear o QR Code que será disponibilizado, conforme exemplifica imagem abaixo, sendo interfaces parecidas tanto para Android quanto iOS: 
 
 <div align = "center">
-<img src="https://rationalappdev.com/wp-content/uploads/2017/06/Expo-2.jpg" width = 150 height = 600 align=”middle”>
+<img src="ExpoGoReadme.jpeg" width = 150 height = 600 align=”middle”>
 </div>
 
 -Agora o aplicativo deve está funcional ! Entre no aplcativo Expo Go em seu dispositivo móvel scanei o QRCode como descrito e mãos a obra!
@@ -99,7 +100,7 @@ Tendo feito os procedimentos descritos, é preciso ir na aba chamada Projecs dis
 - Scaneando o QRCode e realizando alguma alteração no produto Scaneado: (Colocar link)
 - Verificando mais iformações de algum produto no histórico: (Colocar link)
 
-<p align="center"><img src="Frontend/assets/readmeLogo.PNG" width=150 style="float: center; margin: 0px 0px 10px 10px"></p>
+<p align="center"><img src="readmeLogo.PNG" width=150 style="float: center; margin: 0px 0px 10px 10px"></p>
 
 @2021, Insper, Terceiro Semestre, Engenharia da Computação.
 
