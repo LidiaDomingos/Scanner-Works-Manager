@@ -64,11 +64,11 @@ No canto inferior esquerdo haverá um QRCode que pode ser scaneado pelo aplicati
 
 1. Inicializando banco de dados
 
-- Abrir na IDE Eclipse (ou outra semelhante e previamente configurada) a pasta Backend contida no repositorio clonado.
+-- Abrir na IDE Eclipse (ou outra semelhante e previamente configurada) a pasta Backend contida no repositorio clonado.
 
-- Rodar a pasta Backend/src.
+-- Rodar a pasta Backend/src.
 
-- Pegar o link obtido no console
+-- Pegar o link obtido no console
 
 2. Conexão Frontend-Backend
 
@@ -83,7 +83,7 @@ No canto inferior esquerdo haverá um QRCode que pode ser scaneado pelo aplicati
 - Verificando mais iformações de algum produto no histórico: (Colocar link)
 
 
-<div style="text-align:center"><img src="Frontend/assets/marca.png" width=150 style="float: center; margin: 0px 0px 10px 10px"></div>
+<div style="text-align:center"><img src="Frontend/assets/readmeLogo.png" width=150 style="float: center; margin: 0px 0px 10px 10px"></div>
 
 @2021, Insper, Terceiro Semestre, Engenharia da Computação.
 
