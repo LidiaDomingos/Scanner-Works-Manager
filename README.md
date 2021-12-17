@@ -3,7 +3,7 @@
 ## Descrição do Projeto - Proposta 4
 
 <p align="justify">
-Aplicativo desenvolvido na disciplina de Desenvolvimento Colaborativo Ágil no 3°Semestre de Engenharia da Computação em parceria com a empresa ConnectData.  
+Aplicativo desenvolvido na disciplina de Desenvolvimento Colaborativo Ágil no 3° Semestre de Engenharia da Computação em parceria com a empresa ConnectData.  
 </p>
 <p align="justify">
 O aplicativo produzido tem como objetivo monitorar a situação de materiais de forma otimizada, ou seja, ter uma gestão de modificações e manutenção de peças, equipamentos e sistemas construtivos nos locais de construções civis.
@@ -71,7 +71,7 @@ npm start
 
 Após o descrito, uma janela do seu navegador padrão abrirá com o Metro Bundler.
 <p align="justify">
-No canto inferior esquerdo haverá um QRCode que pode ser scaneado pelo aplicativo do Expo Go previamente instalado em seu dispositivo móvel. Essa conexão poderá ser realizada via LAN (necessário estar na mesma rede de wifi que seu dispositivo móvel) ou via TUNEL.
+No canto inferior esquerdo haverá um QRCode que pode ser scaneado pelo aplicativo do Expo Go previamente instalado em seu dispositivo móvel. Essa conexão poderá ser realizada via LAN (necessário estar na mesma rede de wi-fi que seu dispositivo móvel) ou via TUNEL.
 </p>
 :warning: Antes de realizar essa conexão, é necessário configurar o banco de dados :warning:
 
