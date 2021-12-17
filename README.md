@@ -77,7 +77,11 @@ No canto inferior esquerdo haverá um QRCode que pode ser scaneado pelo aplicati
 
 - **Configurando banco de dados e conexão com a interface**
 
-1. Inicializando banco de dados
+1. Criação dos Bancos de dados
+
+Para o funcionamento, é necessário ter uma conta Google e criar dois bancos de dados Firestore como mostrado no seguinte tutorial: <a href = "https://ensino.hashi.pro.br/desagil/tutorial/banco/criacao.html"> Criação de Banco de Dados </a>. Os nomes das chaves devem ser, necessariamente, firestore.json e firestore_test.json e salvas dentro da pasta Backend.
+
+2. Inicializando banco de dados
 
 Abrir na IDE Eclipse (ou outra semelhante e previamente configurada) a pasta Backend contida no repositorio clonado.
  
@@ -85,7 +89,7 @@ Rodar a pasta Backend/src como Java Application.
 
 Pegar o link obtido no console.
 
-2. Conexão Frontend-Backend
+3. Conexão Frontend-Backend
 <p align="justify">
 Copiar o valor do link obtido anteriormente e colar na chave "url" presente na pasta Frontend/settings.json. Caso haja um link no local o mesmo deve ser apagado e esse colado no lugar.
 </p>
