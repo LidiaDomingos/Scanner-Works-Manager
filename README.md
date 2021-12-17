@@ -93,7 +93,7 @@ Tendo feito os procedimentos descritos, é preciso ir na aba chamada Projecs dis
 ## Alguns fluxos possíveis de serem realizados
 
 - Scaneando o QRCode e realizando alguma alteração no produto Scaneado: (Colocar link)
-- Verificando mais iformações de algum produto no histórico: (Colocar link)
+- Verificando mais informações de algum produto no histórico: (Colocar link)
 
 <p align="center"><img src="readmeLogo.PNG" width=150 style="float: center; margin: 0px 0px 10px 10px"></p>
 
