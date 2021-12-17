@@ -42,11 +42,11 @@ class ProdutoDAOTest {
 		produto.setTimeScan("2021-12-16T18:32:17.828Z");              
 		produto.setLastDate("2021-12-09T07:45:18.828Z");
 		produto.setLastTime("2021-12-09T07:45:18.828Z");
-		produto.setNome("Furadeira de Coluna ");
+		produto.setNome("Furadeira de Coluna");
 		produto.setQuantidadeE("5");
 		produto.setMovimentacao("NAO");
 		produto.setQuantidadeM("");
-		produto.setStatus("EM USO");
+		produto.setStatus("USO");
 		produto.setTipo("FERRAMENTA");
 		produto.setDestino("");
 		produto.setObservacao("Indicada para perfurações que necessitam ser precisas.");
@@ -69,7 +69,7 @@ class ProdutoDAOTest {
 		assertEquals("5", produto.getQuantidadeE());
 		assertEquals("NAO", produto.getMovimentacao());
 		assertEquals("", produto.getQuantidadeM());
-		assertEquals("EM USO", produto.getStatus());
+		assertEquals("USO", produto.getStatus());
 		assertEquals("FERRAMENTA", produto.getTipo());
 		assertEquals("", produto.getDestino());
 		assertEquals("Indicada para perfurações que necessitam ser precisas.", produto.getObservacao());

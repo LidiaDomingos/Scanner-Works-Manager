@@ -29,7 +29,7 @@ class ProdutoTest {
 		produto.setQuantidadeE("358");
 		produto.setMovimentacao("SIM");
 		produto.setQuantidadeM("10");
-		produto.setStatus("EM USO");
+		produto.setStatus("USO");
 		produto.setTipo("MATERIAL");
 		produto.setDestino("Armazém 03");
 		produto.setObservacao("Será utilizada na obra para criação de balcões.");
@@ -45,7 +45,7 @@ class ProdutoTest {
 		assertEquals("358", produto.getQuantidadeE());
 		assertEquals("SIM", produto.getMovimentacao());
 		assertEquals("10", produto.getQuantidadeM());
-		assertEquals("EM USO", produto.getStatus());
+		assertEquals("USO", produto.getStatus());
 		assertEquals("MATERIAL", produto.getTipo());
 		assertEquals("Armazém 03", produto.getDestino());
 		assertEquals("Será utilizada na obra para criação de balcões.", produto.getObservacao());
@@ -61,10 +61,11 @@ class ProdutoTest {
 		produto.setTimeScan("2021-12-16T18:32:17.828Z");              
 		produto.setLastDate("2021-12-09T07:45:18.828Z");
 		produto.setLastTime("2021-12-09T07:45:18.828Z");
-		produto.setNome("Furadeira de Coluna ");
+		produto.setNome("Furadeira de Coluna");
 		produto.setQuantidadeE("5");
 		produto.setMovimentacao("NAO");
 		produto.setQuantidadeM("");
+		produto.setStatus("USO");
 		produto.setTipo("FERRAMENTA");
 		produto.setDestino("");
 		produto.setObservacao("Indicada para perfurações que necessitam ser precisas.");
@@ -80,7 +81,7 @@ class ProdutoTest {
 		assertEquals("5", produto.getQuantidadeE());
 		assertEquals("NAO", produto.getMovimentacao());
 		assertEquals("", produto.getQuantidadeM());
-		assertEquals("EM USO", produto.getStatus());
+		assertEquals("USO", produto.getStatus());
 		assertEquals("FERRAMENTA", produto.getTipo());
 		assertEquals("", produto.getDestino());
 		assertEquals("Indicada para perfurações que necessitam ser precisas.", produto.getObservacao());

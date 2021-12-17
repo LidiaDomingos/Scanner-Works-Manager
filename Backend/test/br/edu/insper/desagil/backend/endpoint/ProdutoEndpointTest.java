@@ -36,7 +36,7 @@ class ProdutoEndpointTest extends EndpointTest<Produto> {
 		produto.setQuantidadeE("358");
 		produto.setMovimentacao("SIM");
 		produto.setQuantidadeM("10");
-		produto.setStatus("EM USO");
+		produto.setStatus("USO");
 		produto.setTipo("MATERIAL");
 		produto.setDestino("Armazém 03");
 		produto.setObservacao("Será utilizada na obra para criação de balcões.");
@@ -55,7 +55,7 @@ class ProdutoEndpointTest extends EndpointTest<Produto> {
 		assertEquals("358", produto.getQuantidadeE());
 		assertEquals("SIM", produto.getMovimentacao());
 		assertEquals("10", produto.getQuantidadeM());
-		assertEquals("EM USO", produto.getStatus());
+		assertEquals("USO", produto.getStatus());
 		assertEquals("MATERIAL", produto.getTipo());
 		assertEquals("Armazém 03", produto.getDestino());
 		assertEquals("Será utilizada na obra para criação de balcões.", produto.getObservacao());
