@@ -1,5 +1,6 @@
 import React, {useState,useEffect} from 'react';
 import { Keyboard, Image, KeyboardAvoidingView, TouchableOpacity, Text, StyleSheet, View , Animated } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import { TextInput } from 'react-native-paper';
 import { useGlobal } from '../lib';
 
@@ -13,8 +14,10 @@ export default function Login(props) {
     }
 
     return (
-        <KeyboardAvoidingView style = {{background: "linear-gradient(to right, #2D2A98, #18EEAB)", flexGrow: 1, justifyContent:'center', alignItems:'center'}}> 
-            
+        <KeyboardAvoidingView style = {{flexGrow: 1, justifyContent:'center', alignItems:'center'}}> 
+             <LinearGradient
+                colors={['#2D2A98' , '#18EEAB']}
+                style={styles.background}>
             <View style={styles.containerLogo}>
                 <Image style={{width:200,height:80}} source={require('../assets/loginTela.png')}/>
             </View>
@@ -48,6 +51,7 @@ export default function Login(props) {
             </TouchableOpacity>
 
             </View>
+            </LinearGradient>
         </KeyboardAvoidingView>
     );
 }
@@ -58,6 +62,12 @@ const styles = StyleSheet.create(
            flexGrow:0.45,
            justifyContent:'center',
            alignItems:'center',
+       },
+       background:{
+           flexGrow:1,
+           width:'100%',
+           justifyContent: 'center',
+           alignItems: 'center'
        },
        container:{
            flex:1,
