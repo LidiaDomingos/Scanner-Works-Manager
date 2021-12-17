@@ -78,8 +78,9 @@ No canto inferior esquerdo haverá um QRCode que pode ser scaneado pelo aplicati
 - **Configurando banco de dados e conexão com a interface**
 
 1. Criação dos Bancos de dados
-
+<p align = "justify">
 Para o funcionamento, é necessário ter uma conta Google e criar dois bancos de dados Firestore como mostrado no seguinte tutorial: <a href = "https://ensino.hashi.pro.br/desagil/tutorial/banco/criacao.html"> Criação de Banco de Dados </a>. Os nomes das chaves devem ser, necessariamente, firestore.json e firestore_test.json e salvas dentro da pasta Backend.
+ </p>
 
 2. Inicializando banco de dados
 
