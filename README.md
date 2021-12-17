@@ -109,9 +109,12 @@ Agora o aplicativo deve estar funcional! Entre no aplicativo Expo Go em seu disp
 - <p> <a href = "https://www.youtube.com/watch?v=YYfyCDZRBJ8&list=PL5_V9v2YDb3F6leLQwSuE0Havvg9nOwHw&index=4"> Visualizar e modificar algumas informações do produto a partir do histórico </a> </p>
 - <p> <a href = "https://www.youtube.com/watch?v=hQuUxk2SeJM&list=PL5_V9v2YDb3F6leLQwSuE0Havvg9nOwHw&index=5"> Retirar a movimentação do produto </a> </p>
 - <p> <a href = "https://www.youtube.com/watch?v=jKfXWzaf2wY&list=PL5_V9v2YDb3F6leLQwSuE0Havvg9nOwHw&index=6"> Apagar um produto </a> </p>
-
+### Extra
+<p align = "justify">
+Ademais, foi produzido um protótipo a mais, que não está 100% implementado, mas faz a ideia principal que é a de cadastrar um novo produto no banco de dados, conforme pode ser visto nesse <a href = "https://www.youtube.com/watch?v=yZIxieFcncE&list=PL5_V9v2YDb3F6leLQwSuE0Havvg9nOwHw&index=7"> vídeo. </a> Tal implementação está na branch <a href = "https://github.com/hashiprobr-classroom/projeto-go/tree/PrototipoAdd">PrototipoAdd</a>, sendo necessário os mesmos passos já explicados anteriormentes para a sua visualização tanto no expo quanto no navegador.
+</p>
 <div>
-<h3>Foi feita uma playlist para melhor visualização:
+<h3>Foi feita uma playlist com todos os vídeos de demonstração para melhor visualização:
 <a href="https://www.youtube.com/watch?v=JPmV8nfNpAU&list=PL5_V9v2YDb3F6leLQwSuE0Havvg9nOwHw"> Playlist </a>
  </h3>
 </div>
