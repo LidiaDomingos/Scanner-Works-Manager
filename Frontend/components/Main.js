@@ -73,7 +73,7 @@ export default function Main(props) {
     
     return (
        
-          <Drawer.Navigator initialRouteName="Consulta"  
+          <Drawer.Navigator initialRouteName="Login"  
             drawerContent={props => <DrawerCustomizado {...props}/>}
             screenOptions={screenOptions}>
 

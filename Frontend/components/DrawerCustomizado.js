@@ -64,10 +64,10 @@ const styles = StyleSheet.create({
         flex:1,
         justifyContent:'center',
         alignItems:'center',
-        marginBottom:'1.5rem'
+        marginBottom:3
     },
     icon:{
-    marginTop:'1.5rem',
+      marginTop:2,
     },
     list: {
         flexDirection:'row',
