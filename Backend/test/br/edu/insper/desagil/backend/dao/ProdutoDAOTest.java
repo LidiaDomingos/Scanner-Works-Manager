@@ -35,20 +35,22 @@ class ProdutoDAOTest {
 		
 		produto = new Produto();
 		
-		produto.setId("MadeiraW200L60");
-		produto.setLocal("Edificio Matilda");
-		produto.setUsuario("user1");
-		//produto.setDateScan("2021-11-25");         //VER COMO ESCREVE
-		//produto.setTimeScan("15:30");              //VER
-		//produto.setLastDate("2021-10-10");
-		//produto.setLastTime("10:00");
-		produto.setNome("Pedaco de madeira");
+		produto.setId("key0102FUco");
+		produto.setLocal("Armazém 02");
+		produto.setUsuario("User02");
+		produto.setDateScan("2021-12-16T18:32:17.828Z");        
+		produto.setTimeScan("2021-12-16T18:32:17.828Z");              
+		produto.setLastDate("2021-12-09T07:45:18.828Z");
+		produto.setLastTime("2021-12-09T07:45:18.828Z");
+		produto.setNome("Furadeira de Coluna ");
+		produto.setQuantidadeE("5");
 		produto.setMovimentacao("NAO");
-		produto.setQuantidadeE("10");
-		produto.setQuantidadeM("0");
-		produto.setDestino("");
+		produto.setQuantidadeM("");
 		produto.setStatus("EM USO");
-		produto.setObservacao("Testando BD.");
+		produto.setTipo("FERRAMENTA");
+		produto.setDestino("");
+		produto.setObservacao("Indicada para perfurações que necessitam ser precisas.");
+		
 		
 		dao.create(produto);
 		String key = produto.getId();
@@ -56,20 +58,21 @@ class ProdutoDAOTest {
 		
 		produto = dao.retrieve(key);
 		
-		assertEquals("MadeiraW200L60", produto.getId());
-		assertEquals("Edificio Matilda", produto.getLocal());
-		assertEquals("user1", produto.getUsuario());
-		//assertEquals("2021-11-25", produto.getDateScan());
-		//assertEquals("15:30", produto.getTimeScan());
-		//assertEquals("2021-10-10", produto.getLastDate());
-		//assertEquals("10:00", produto.getLastTime());
-		assertEquals("Pedaco de madeira", produto.getNome());
+		assertEquals("key0102FUco", produto.getId());
+		assertEquals("Armazém 02", produto.getLocal());
+		assertEquals("User02", produto.getUsuario());
+		assertEquals("2021-12-16T18:32:17.828Z", produto.getDateScan());
+		assertEquals("2021-12-16T18:32:17.828Z", produto.getTimeScan());
+		assertEquals("2021-12-09T07:45:18.828Z", produto.getLastDate());
+		assertEquals("2021-12-09T07:45:18.828Z", produto.getLastTime());
+		assertEquals("Furadeira de Coluna", produto.getNome());
+		assertEquals("5", produto.getQuantidadeE());
 		assertEquals("NAO", produto.getMovimentacao());
-		assertEquals("10", produto.getQuantidadeE());
-		assertEquals("0", produto.getQuantidadeM());
-		assertEquals("", produto.getDestino());
+		assertEquals("", produto.getQuantidadeM());
 		assertEquals("EM USO", produto.getStatus());
-		assertEquals("Testando BD.", produto.getObservacao());
+		assertEquals("FERRAMENTA", produto.getTipo());
+		assertEquals("", produto.getDestino());
+		assertEquals("Indicada para perfurações que necessitam ser precisas.", produto.getObservacao());
 		
 		dao.delete(key);
 		assertFalse(dao.exists(key));
